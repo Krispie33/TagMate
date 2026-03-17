@@ -17,4 +17,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :profiles, only: [:new, :create, :index, :destroy]
+  resources :chats, only: [:show] do
+    resources :messages, only: [:create]
+  end
 end

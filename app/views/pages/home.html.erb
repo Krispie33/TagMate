@@ -1,2 +1,26 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center" style="background:#0f8a9d;">
+  <div class="row justify-content-center w-100">
+    <div class="col-12 col-lg-8">
+      <div class="text-center p-5">
+
+
+        <div class="mb-4">
+          <%= image_tag"TagMate_landing.png",
+              class: "img-fluid rounded shadow",
+              alt: "TagMate illustration" %>
+        </div>
+
+        <h1 class="text-white fw-bold">TagMate</h1>
+        <p class="text-white fs-4 mb-4">
+          Your laundry,<br>decoded.
+        </p>
+
+        <div class="d-flex justify-content-center gap-2">
+          <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-sm" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-sm" %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

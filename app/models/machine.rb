@@ -3,6 +3,8 @@
 class Machine < ApplicationRecord
   belongs_to :profile
 
+  validates :brand, :model, presence: true
+
   # ─────────────────────────────────────────────
   # Constants
   # ─────────────────────────────────────────────

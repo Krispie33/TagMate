@@ -15,11 +15,17 @@
           Your laundry,<br>decoded.
         </p>
 
-        <div class="d-flex justify-content-center gap-2">
-          <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-sm" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-sm" %>
-        </div>
-
+        <% if user_signed_in? %>
+          <h1>Welcome back, <%= current_user.username %></h1>
+          <%= link_to "Go to profile", profiles_path, class: "btn btn-outline-light btn-sm" %>
+          <%= link_to "Scan your clothes", new_clothing_item_path, class: "btn btn-outline-light btn-sm" %>
+          <%= link_to "Go to drawers", drawers_path, class: "btn btn-outline-light btn-sm" %>
+        <% else %>
+          <div class="d-flex justify-content-center gap-2">
+            <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-sm" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-sm" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

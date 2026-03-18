@@ -3,10 +3,14 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new
+    @profile.machines.build # builds one machine for the form
+    @profiles = Profile.includes(:machines)
   end
 
   def create
     @profile = Profile.new(profile_params)
+    @profile.user = current_user
+
     if @profile.save
       if params[:commit] == "Create Profile"
         redirect_to new_profile_path, notice: "Profile added."
@@ -32,7 +36,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :username,
+      :name,
       machines_attributes: %i[brand model]
     )
   end

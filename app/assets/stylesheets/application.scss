@@ -12,5 +12,10 @@
 @import "pages/index";
 
 body {
-  background: 09637E;
+  background: #09637E;
+}
+
+.card {
+  background-color: rgba(8, 131, 149, 0.9) !important;
+  color: white;
 }

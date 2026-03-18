@@ -1,25 +1,32 @@
 class ClothingItemsController < ApplicationController
+  def index
+    @clothing_items = ClothingItem.joins(drawer: :profile).where(profiles: { user_id: current_user.id })
+  end
+
   def new
-    @cloth = Cloth.new
+    @clothing_item = ClothingItem.new
   end
 
   def create
-    @cloth = current_user.clothes.build(cloth_params)
+    @clothing_item = current_user.clothing_items.build(clothing_item_params)
 
-    if @cloth.save
-      redirect_to @cloth, notice: "Clothing item was uploaded successfully."
+    if @clothing_item.save
+      LaundryTagReader.new(@clothing_item).process_tag!
+      DrawerAssigner.new(@clothing_item).assign!
+
+      redirect_to @clothing_item, notice: "Clothing item saved successfully."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @cloth = current_user.clothes.find(params[:id])
+    @clothing_item = ClothingItem.joins(drawer: :profile).where(profiles: { user_id: current_user.id }).find(params[:id])
   end
 
   private
 
-  def cloth_params
-    params.require(:cloth).permit(:name, :tag_image, :item_image)
+  def clothing_item_params
+    params.require(:clothing_item).permit(:name, :tag_image, :item_image)
   end
 end

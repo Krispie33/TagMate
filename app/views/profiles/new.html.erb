@@ -1,0 +1,54 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <h2 class="text-center fw-bold mb-3">Create Your Profile</h2>
+          <p class="text-center text-muted mb-4">
+            Select your washing machine details
+          </p>
+
+          <%= form_with model: @profile do |f| %>
+
+            <!-- Profile Name -->
+            <div class="mb-3 text-center">
+              <%= f.label :name, "Profile Name", class: "form-label fw-semibold" %>
+              <%= f.text_field :name,
+                    class: "form-control mx-auto",
+                    style: "max-width: 250px;",
+                    maxlength: 20 %>
+            </div>
+
+            <%= f.fields_for :machines do |m| %>
+
+              <!-- Brand -->
+              <div class="mb-3 text-center">
+                <%= m.label :brand, "Machine Brand", class: "form-label fw-semibold" %>
+                <%= m.select :brand, @machine_brands,
+                      { prompt: "Select brand" },
+                      class: "form-select mx-auto",
+                      style: "max-width: 250px;",
+                      id: "brand_select" %>
+              </div>
+
+              <!-- Model -->
+              <div class="mb-4 text-center">
+                <%= m.label :model, "Machine Model", class: "form-label fw-semibold" %>
+                <%= m.select :model, [],
+                      { prompt: "Select model" },
+                      class: "form-select mx-auto",
+                      style: "max-width: 250px;",
+                      id: "model_select" %>
+              </div>
+
+            <% end %>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <%= f.submit "Create Profile", class: "btn custom-btn" %>
+              <%= f.submit "Next", class: "btn custom-btn" %>
+            </div>
+
+          <% end %>

@@ -1,0 +1,75 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <h2 class="text-center fw-bold mb-3">Create Your Profile</h2>
+          <p class="text-center text-muted mb-4">
+            Select your washing machine details
+          </p>
+
+      <%= form_with model: @profile do |f| %>
+
+         <!-- Username -->
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.fields_for :machines do |m| %>
+          <%= m.label :brand %>
+          <%= m.select :brand, @machine_brands, {}, { id: "brand_select" } %>
+
+          <%= m.label :model %>
+          <%= m.select :model, [], {}, { id: "model_select" } %>
+        <% end %>
+
+        <br>
+        <%= f.submit "Create Profile" %>
+        <%= f.submit "Next" %>
+      <% end %>
+
+      <hr>
+
+      <h2>Profiles</h2>
+      <ul>
+        <% @profiles.each do |p| %>
+          <li>
+            <%= p.name %>:
+            <ul>
+              <% p.machines.each do |m| %>
+                <li><%= m.brand %> - <%= m.model %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+
+      <div id="machine-data" data-models='<%= @machine_models.to_json %>'></div>
+
+      <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const brand = document.getElementById("brand_select");
+        const model = document.getElementById("model_select");
+        const data = document.getElementById("machine-data");
+        if (!brand || !model || !data) return;
+
+        const models = JSON.parse(data.dataset.models);
+
+        brand.addEventListener("change", () => {
+          model.innerHTML = "";
+          (models[brand.value] || []).forEach(m => {
+            const option = document.createElement("option");
+            option.value = m;
+            option.text = m;
+            model.appendChild(option);
+          });
+        });
+      });
+      </script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,66 +10,45 @@
             Select your washing machine details
           </p>
 
-      <%= form_with model: @profile do |f| %>
+          <%= form_with model: @profile do |f| %>
 
-         <!-- Username -->
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+            <!-- Profile Name -->
+            <div class="mb-3 text-center">
+              <%= f.label :name, "Profile Name", class: "form-label fw-semibold" %>
+              <%= f.text_field :name,
+                    class: "form-control mx-auto",
+                    style: "max-width: 250px;",
+                    maxlength: 20 %>
+            </div>
 
-        <%= f.fields_for :machines do |m| %>
-          <%= m.label :brand %>
-          <%= m.select :brand, @machine_brands, {}, { id: "brand_select" } %>
+            <%= f.fields_for :machines do |m| %>
 
-          <%= m.label :model %>
-          <%= m.select :model, [], {}, { id: "model_select" } %>
-        <% end %>
+              <!-- Brand -->
+              <div class="mb-3 text-center">
+                <%= m.label :brand, "Machine Brand", class: "form-label fw-semibold" %>
+                <%= m.select :brand, @machine_brands,
+                      { prompt: "Select brand" },
+                      class: "form-select mx-auto",
+                      style: "max-width: 250px;",
+                      id: "brand_select" %>
+              </div>
 
-        <br>
-        <%= f.submit "Create Profile" %>
-        <%= f.submit "Next" %>
-      <% end %>
+              <!-- Model -->
+              <div class="mb-4 text-center">
+                <%= m.label :model, "Machine Model", class: "form-label fw-semibold" %>
+                <%= m.select :model, [],
+                      { prompt: "Select model" },
+                      class: "form-select mx-auto",
+                      style: "max-width: 250px;",
+                      id: "model_select" %>
+              </div>
 
-      <hr>
+            <% end %>
 
-      <h2>Profiles</h2>
-      <ul>
-        <% @profiles.each do |p| %>
-          <li>
-            <%= p.name %>:
-            <ul>
-              <% p.machines.each do |m| %>
-                <li><%= m.brand %> - <%= m.model %></li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
+            <!-- Buttons -->
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <%= f.submit "Create Profile", class: "btn custom-btn" %>
+              <%= f.submit "Next", class: "btn custom-btn" %>
+            </div>
 
-      <div id="machine-data" data-models='<%= @machine_models.to_json %>'></div>
-
-      <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const brand = document.getElementById("brand_select");
-        const model = document.getElementById("model_select");
-        const data = document.getElementById("machine-data");
-        if (!brand || !model || !data) return;
-
-        const models = JSON.parse(data.dataset.models);
-
-        brand.addEventListener("change", () => {
-          model.innerHTML = "";
-          (models[brand.value] || []).forEach(m => {
-            const option = document.createElement("option");
-            option.value = m;
-            option.text = m;
-            model.appendChild(option);
-          });
-        });
-      });
-      </script>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          <% end %>

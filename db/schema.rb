@@ -75,7 +75,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_145541) do
     t.text "tag_data"
     t.string "tag_image"
     t.datetime "updated_at", null: false
-    t.index ["drawer_id"], name: "index_cloths_on_drawer_id"
+    t.index ["drawer_id"], name: "index_clothes_on_drawer_id"
   end
 
   create_table "drawers", force: :cascade do |t|

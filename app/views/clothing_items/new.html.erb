@@ -1,1 +1,50 @@
-<h1>New Clothing Item</h1>
+<!-- <h1>Scan clothing item</h1>
+
+<%= form_with model: @clothing_item, local: true, html: { multipart: true, id: "clothing-item-form" } do |form| %>
+  <% if @clothing_item.errors.any? %>
+    <div>
+      <h2><%= pluralize(@clothing_item.errors.count, "error") %> prevented saving:</h2>
+      <ul>
+        <% @clothing_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Clothing name" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <hr>
+
+  <h2>1. Take a picture of the laundry tag</h2>
+  <div class="camera-block" data-target="tag">
+    <video class="camera-video" autoplay playsinline muted>
+      Camera preview not available.
+    </video>
+    <button type="button" class="capture-button">Capture tag</button>
+    <canvas class="camera-canvas" style="display:none;"></canvas>
+    <img class="camera-preview" alt="Tag preview" style="display:none; max-width: 320px;">
+  </div>
+
+  <hr>
+
+  <h2>2. Take a picture of the garment</h2>
+  <div class="camera-block" data-target="item">
+    <video class="camera-video" autoplay playsinline muted>
+      Camera preview not available.
+    </video>
+    <button type="button" class="capture-button">Capture garment</button>
+    <canvas class="camera-canvas" style="display:none;"></canvas>
+    <img class="camera-preview" alt="Garment preview" style="display:none; max-width: 320px;">
+  </div>
+
+  <%= form.file_field :tag_image, id: "clothing_item_tag_image", style: "display:none;" %>
+  <%= form.file_field :item_image, id: "clothing_item_item_image", style: "display:none;" %>
+
+  <div style="margin-top: 20px;">
+    <%= form.submit "Save clothing item" %>
+  </div>
+<% end %> -->

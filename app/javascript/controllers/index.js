@@ -2,3 +2,8 @@
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
+
+import CameraController from "./camera_controller"
+import FormValidationController from "./form_validation_controller"
+
+application.register("camera", CameraController)

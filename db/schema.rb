@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_153520) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_18_135805) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,14 +52,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_153520) do
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
-  create_table "cloths", force: :cascade do |t|
+  create_table "clothes", force: :cascade do |t|
     t.string "cloth_image"
     t.datetime "created_at", null: false
     t.bigint "drawer_id", null: false
     t.text "tag_data"
     t.string "tag_image"
     t.datetime "updated_at", null: false
-    t.index ["drawer_id"], name: "index_cloths_on_drawer_id"
+    t.index ["drawer_id"], name: "index_clothes_on_drawer_id"
   end
 
   create_table "drawers", force: :cascade do |t|
@@ -114,7 +114,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_153520) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "drawers"
   add_foreign_key "chats", "users"
-  add_foreign_key "cloths", "drawers"
+  add_foreign_key "clothes", "drawers"
   add_foreign_key "drawers", "profiles"
   add_foreign_key "machines", "profiles"
   add_foreign_key "messages", "chats"

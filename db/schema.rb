@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_18_145541) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_18_151727) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,16 +68,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_145541) do
     t.index ["drawer_id"], name: "index_clothing_items_on_drawer_id"
   end
 
-  create_table "cloths", force: :cascade do |t|
-    t.string "cloth_image"
-    t.datetime "created_at", null: false
-    t.bigint "drawer_id", null: false
-    t.text "tag_data"
-    t.string "tag_image"
-    t.datetime "updated_at", null: false
-    t.index ["drawer_id"], name: "index_cloths_on_drawer_id"
-  end
-
   create_table "drawers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "instructions"
@@ -131,7 +121,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_145541) do
   add_foreign_key "chats", "drawers"
   add_foreign_key "chats", "users"
   add_foreign_key "clothing_items", "drawers"
-  add_foreign_key "cloths", "drawers"
   add_foreign_key "drawers", "profiles"
   add_foreign_key "machines", "profiles"
   add_foreign_key "messages", "chats"

@@ -1,4 +1,4 @@
-class ClothesController < ApplicationController
+class ClothingItemsController < ApplicationController
   def new
     @cloth = Cloth.new
   end

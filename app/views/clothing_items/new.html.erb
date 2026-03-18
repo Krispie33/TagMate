@@ -1,6 +1,14 @@
 <h1>Scan clothing item</h1>
 
-<%= form_with model: @clothing_item, local: true, html: { multipart: true, id: "clothing-item-form" } do |form| %>
+<%= form_with model: @clothing_item, local: true,
+      html: {
+        multipart: true,
+        id: "clothing-item-form",
+        data: {
+          controller: "form-validation",
+          action: "submit->form-validation#validate"
+        }
+      } do |form| %>
   <% if @clothing_item.errors.any? %>
     <div>
       <h2><%= pluralize(@clothing_item.errors.count, "error") %> prevented saving:</h2>
@@ -42,7 +50,13 @@
   </div>
 
   <%= form.file_field :tag_image, id: "clothing_item_tag_image", style: "display:none;" %>
-  <%= form.file_field :item_image, id: "clothing_item_item_image", style: "display:none;" %>
+  <%= form.file_field :tag_image,
+      data: {
+        camera_target: "hiddenInput",
+        form_validation_target: "requiredFile",
+        label: "laundry tag"
+      },
+      hidden: true %>
 
   <div style="margin-top: 20px;">
     <%= form.submit "Save clothing item" %>

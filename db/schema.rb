@@ -52,30 +52,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_151727) do
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
-  create_table "clothes", force: :cascade do |t|
-    t.string "cloth_image"
-    t.datetime "created_at", null: false
-    t.bigint "drawer_id", null: false
-    t.text "tag_data"
-    t.string "tag_image"
-    t.datetime "updated_at", null: false
-    t.index ["drawer_id"], name: "index_clothes_on_drawer_id"
-  end
-
   create_table "clothing_items", force: :cascade do |t|
-    t.json "ai_raw_response"
-    t.boolean "bleach_allowed"
+    t.jsonb "ai_raw_response"
+    t.boolean "bleach_allowed", default: false
     t.text "care_summary"
     t.datetime "created_at", null: false
-    t.bigint "drawer_id", null: false
-    t.boolean "dry_clean"
-    t.boolean "iron_allowed"
-    t.string "item_image"
-    t.string "tag_image"
-    t.boolean "tumble_dry"
+    t.bigint "drawer_id"
+    t.boolean "dry_clean", default: false
+    t.boolean "iron_allowed", default: false
+    t.boolean "tumble_dry", default: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.integer "wash_temp"
     t.index ["drawer_id"], name: "index_clothing_items_on_drawer_id"
+    t.index ["user_id"], name: "index_clothing_items_on_user_id"
   end
 
   create_table "drawers", force: :cascade do |t|
@@ -272,8 +262,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_151727) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "drawers"
   add_foreign_key "chats", "users"
-  add_foreign_key "clothes", "drawers"
   add_foreign_key "clothing_items", "drawers"
+  add_foreign_key "clothing_items", "users"
   add_foreign_key "drawers", "profiles"
   add_foreign_key "machines", "profiles"
   add_foreign_key "messages", "chats"

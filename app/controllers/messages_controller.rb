@@ -26,21 +26,18 @@ class MessagesController < ApplicationController
     Answer concisely in Markdown.
   PROMPT
 
+  def new
+    @chat = find_or_create_scan_chat
+    @message = Message.new
+  end
+
   def create
     @chat = current_user.chats.find(params[:chat_id])
-
-    @message = Message.new(message_params)
-    @message.chat = @chat
-    @message.role = "user"
+    @message = Message.new(message_params.merge(chat: @chat, role: "user"))
+    @message.content = "Scan care label" if @message.content.blank?
 
     if @message.save
-      if @message.file.attached? && @message.file.image?
-        process_tag_image(@message.file)
-      else
-        send_question
-      end
-      @chat.messages.create(role: "assistant", content: @response.content)
-      @chat.generate_title_from_first_message
+      generate_assistant_response
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity
@@ -48,6 +45,24 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def find_or_create_scan_chat
+    profile = current_user.profiles.first
+    drawer = profile&.drawers&.first || profile&.drawers&.create!(name: "Scanned Items")
+    current_user.chats.find_or_create_by!(title: "Tag Scans") do |c|
+      c.drawer = drawer
+    end
+  end
+
+  def generate_assistant_response
+    if @message.file.attached? && @message.file.image?
+      process_tag_image(@message.file)
+    else
+      send_question
+    end
+    @chat.messages.create(role: "assistant", content: @response.content)
+    @chat.generate_title_from_first_message
+  end
 
   def message_params
     params.require(:message).permit(:content, :file)

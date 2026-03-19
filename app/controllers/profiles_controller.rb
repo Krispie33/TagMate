@@ -8,6 +8,14 @@ class ProfilesController < ApplicationController
   end
 
   def create
+    if Profile.count >= 5
+      @profiles = Profile.includes(:machines)
+      @profile = Profile.new
+      flash.now[:alert] = "You can only create up to 5 profiles."
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     @profile = Profile.new(profile_params)
     @profile.user = current_user
 
@@ -23,13 +31,9 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def index
-    @profiles = Profile.includes(:machines)
-  end
-
   def destroy
     Profile.find(params[:id]).destroy
-    redirect_to profiles_path, notice: "Profile deleted."
+    redirect_to new_profile_path, notice: "Profile deleted."
   end
 
   private

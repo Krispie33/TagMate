@@ -1,1 +1,17 @@
-<h1>Your drawers</h1>
+
+<h1>Your Drawers</h1>
+
+<div class="container ">
+  <% if @drawers.empty? %>
+    <p class="text-gray-500">No drawers yet.</p>
+  <% else %>
+    <div class="#">
+      <% @drawers.each do |drawer| %>
+        <%= link_to drawer, class: "bg-white rounded-lg shadow hover:shadow-md transition p-4" do %>
+          <p class="font-semibold"><%= drawer.name %></p>
+          <p class="text-sm text-gray-500"><%= drawer.clothing_items.count %> items</p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

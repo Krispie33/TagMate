@@ -24,6 +24,6 @@ class User < ApplicationRecord
       errors.add(:password, "must include at least #{requirement}")
     end
   end
-  has_many :profiles, dependent: :destroy
-  has_many :chats, dependent: :destroy
+  has_many :profiles
+  has_many :chats
 end

@@ -4,6 +4,7 @@ import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
 
 import CameraController from "./camera_controller"
-import FormValidationController from "./form_validation_controller"
+import MachineSelectController from "./machine_select_controller"
 
 application.register("camera", CameraController)
+application.register("machine-select", MachineSelectController)

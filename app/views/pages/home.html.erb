@@ -17,7 +17,7 @@
 
         <% if user_signed_in? %>
           <h1>Welcome back, <%= current_user.username %></h1>
-          <%= link_to "Go to profile", profiles_path, class: "btn btn-outline-light btn-sm" %>
+          <%= link_to "Go to profile", new_profile_path, class: "btn btn-outline-light btn-sm" %>
           <%= link_to "Scan your clothes", new_clothing_item_path, class: "btn btn-outline-light btn-sm" %>
           <%= link_to "Go to drawers", drawers_path, class: "btn btn-outline-light btn-sm" %>
         <% else %>

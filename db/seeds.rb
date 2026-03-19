@@ -7,13 +7,13 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-User.destroy_all
-Profile.destroy_all
 Machine.destroy_all
 Drawer.destroy_all
-Cloth.destroy_all
+# Cloth.destroy_all
 Chat.destroy_all
 Message.destroy_all
+Profile.destroy_all
+User.destroy_all
 user1 = User.create!(username: "kris", email: "kris@test.com", password: "123456@W")
 profile1 = Profile.create!(name: "home", user: user1)
 machine1 = Machine.create!(brand: "miele", model: "W3245", profile: profile1)

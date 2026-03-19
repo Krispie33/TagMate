@@ -1,0 +1,32 @@
+<h1><%= @clothing_item.name.presence || "Clothing item" %></h1>
+
+<div>
+  <h2>Garment Photo</h2>
+  <% if @clothing_item.item_image.attached? %>
+    <%= image_tag @clothing_item.item_image, width: 300 %>
+  <% end %>
+</div>
+
+<div>
+  <h2>Laundry Tag Photo</h2>
+  <% if @clothing_item.tag_image.attached? %>
+    <%= image_tag @clothing_item.tag_image, width: 300 %>
+  <% end %>
+</div>
+
+<div>
+  <h2>Care Instructions</h2>
+  <% if @clothing_item.care_summary.present? %>
+    <p><%= @clothing_item.care_summary %></p>
+
+    <ul>
+      <li>Wash temperature: <%= @clothing_item.wash_temp.presence || "Unknown" %></li>
+      <li>Bleach: <%= @clothing_item.bleach_allowed ? "Allowed" : "Do not bleach" %></li>
+      <li>Tumble dry: <%= @clothing_item.tumble_dry ? "Allowed" : "Do not tumble dry" %></li>
+      <li>Iron: <%= @clothing_item.iron_allowed ? "Allowed" : "Do not iron" %></li>
+      <li>Dry clean only: <%= @clothing_item.dry_clean_only ? "Yes" : "No" %></li>
+    </ul>
+  <% else %>
+    <p>Care instructions have not been processed yet.</p>
+  <% end %>
+</div>

@@ -27,7 +27,11 @@ class MessagesController < ApplicationController
   PROMPT
 
   def new
-    @chat = find_or_create_scan_chat
+    profile = current_user.profiles.first
+    unless profile
+      redirect_to new_profile_path, alert: "Please set up a profile before scanning a tag." and return
+    end
+    @chat = find_or_create_scan_chat(profile)
     @message = Message.new
   end
 
@@ -46,9 +50,8 @@ class MessagesController < ApplicationController
 
   private
 
-  def find_or_create_scan_chat
-    profile = current_user.profiles.first
-    drawer = profile&.drawers&.first || profile&.drawers&.create!(name: "Scanned Items")
+  def find_or_create_scan_chat(profile)
+    drawer = profile.drawers.first || profile.drawers.create!(name: "Scanned Items")
     current_user.chats.find_or_create_by!(title: "Tag Scans") do |c|
       c.drawer = drawer
     end

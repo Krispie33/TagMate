@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :clothing_items
-  has_many :drawers
+  has_many :clothing_items, dependent: :destroy
+  has_many :drawers, through: :profile, dependent: :destroy
 
   validate :password_complexity, if: -> { password.present? }
 

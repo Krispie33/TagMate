@@ -87,18 +87,21 @@
             </div>
           <% end %>
 
-
-        <div class="text-center mt-4">
-          <form action="<%= clothing_items_path %>" method="get" id="next-form" data-turbo="false">
+        <div class="d-flex justify-content-end mt-4">
+          <form action="<%= clothing_items_path %>"
+            method="get"
+            id="next-form"
+            data-turbo="false">
             <button type="submit" class="btn custom-btn" id="next-btn">Next</button>
           </form>
         </div>
 
 
+
       <div id="machine-data" data-models='<%= @machine_models.to_json %>'></div>
 
       <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("turbo:load", () => {
           const nextForm = document.getElementById("next-form");
 
           nextForm.addEventListener("submit", (event) => {
@@ -111,6 +114,7 @@
           });
         });
       </script>
+
 
 
       </div>

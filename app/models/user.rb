@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :clothing_items, dependent: :destroy
-  has_many :drawers, dependent: :destroy
+  has_many :clothing_items
+  has_many :drawers
 
   validate :password_complexity, if: -> { password.present? }
 
@@ -24,6 +24,6 @@ class User < ApplicationRecord
       errors.add(:password, "must include at least #{requirement}")
     end
   end
-  has_many :profiles, dependent: :destroy
-  has_many :chats, dependent: :destroy
+  has_many :profiles
+  has_many :chats
 end

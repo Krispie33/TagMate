@@ -1,6 +1,6 @@
 class ClothingItemsController < ApplicationController
   def index
-    @clothing_items = ClothingItem.joins(drawer: :profile).where(profiles: { user_id: current_user.id })
+    @clothing_items = current_user.clothing_items
   end
 
   def new
@@ -21,7 +21,7 @@ class ClothingItemsController < ApplicationController
   end
 
   def show
-    @clothing_item = ClothingItem.joins(drawer: :profile).where(profiles: { user_id: current_user.id }).find(params[:id])
+    @clothing_item = current_user.clothing_items.find(params[:id])
   end
 
   private

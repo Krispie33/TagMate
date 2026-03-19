@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :profiles, only: [:index, :new, :create, :destroy]
 
-  resources :chats, only: [:show] do
+  resources :chats, only: [:show, :create] do
     resources :messages, only: [:create]
   end
   

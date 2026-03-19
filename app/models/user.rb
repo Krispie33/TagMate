@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :clothing_items, dependent: :destroy
-  has_many :drawers, dependent: :destroy
+  has_many :drawers, through: :profile, dependent: :destroy
 
   validate :password_complexity, if: -> { password.present? }
 

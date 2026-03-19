@@ -6,10 +6,11 @@ class MessagesController < ApplicationController
   # Guide me into making a classic French oeuf mayo.
   # Provide step-by-step instructions in bullet points, using Markdown.
   # PROMPT
-  SYSTEM_PROMPT = "You are a Teaching Assistant.\n\nI am a student at the Le Wagon AI Software Development
-  Bootcamp, learning how to code.\n\nHelp me break down my problem into small, actionable steps, without giving
-  away solutions.\n\nAnswer concisely in Markdown."
+  SYSTEM_PROMPT = "You are a Washing Assistant.\n\nI am a young adult, having to do the laundary
+  for the first time.\n\nHelp me sort my clothes into heaps and give washing instructions for that heap
+  in small, actionable steps.\n\nAnswer concisely in Markdown."
   def create
+    @challenge = @clothing_item.current_user
     @chat = current_user.chats.find(params[:chat_id])
     @challenge = @chat.challenge
 
@@ -35,6 +36,14 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:content, :file)
+  end
+
+  def challenge_context
+    "Here is the context of the challenge: #{@challenge.content}."
+  end
+
+  def instructions
+    [SYSTEM_PROMPT, challenge_context].compact.join("\n\n")
   end
 
   def build_conversation_history

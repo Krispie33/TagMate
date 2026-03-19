@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   resources :clothing_items, only: [:index, :new, :create, :show]
 
 
-  resources :profiles, only: [:new, :create, :index, :destroy]
-  
+  resources :profiles, only: [:new, :create, :destroy]
+  resources :scan
+
   resources :chats, only: [:show] do
     resources :messages, only: [:create]
   end

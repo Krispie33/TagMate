@@ -7,7 +7,7 @@
 
           <h2 class="text-center fw-bold mb-3">Create Your Profile</h2>
           <p class="text-center text-muted mb-4">
-            Select your washing machine details
+            Select your washing machine
           </p>
 
           <%= form_with model: @profile do |f| %>
@@ -23,24 +23,29 @@
 
             <%= f.fields_for :machines do |m| %>
 
-              <!-- Brand -->
-              <div class="mb-3 text-center">
-                <%= m.label :brand, "Machine Brand", class: "form-label fw-semibold" %>
-                <%= m.select :brand, @machine_brands,
-                      { prompt: "Select brand" },
-                      class: "form-select mx-auto",
-                      style: "max-width: 250px;",
-                      id: "brand_select" %>
-              </div>
+              <div data-controller="machine-select"
+                   data-machine-select-models-value="<%= @machine_models.to_json %>">
 
-              <!-- Model -->
-              <div class="mb-4 text-center">
-                <%= m.label :model, "Machine Model", class: "form-label fw-semibold" %>
-                <%= m.select :model, [],
-                      { prompt: "Select model" },
-                      class: "form-select mx-auto",
-                      style: "max-width: 250px;",
-                      id: "model_select" %>
+                <!-- Brand -->
+                <div class="mb-3 text-center">
+                  <%= m.label :brand, "Machine Brand", class: "form-label fw-semibold" %>
+                  <%= m.select :brand, @machine_brands,
+                        { prompt: "Select brand" },
+                        class: "form-select mx-auto",
+                        style: "max-width: 250px;",
+                        data: { machine_select_target: "brand", action: "change->machine-select#updateModels" } %>
+                </div>
+
+                <!-- Model -->
+                <div class="mb-4 text-center">
+                  <%= m.label :model, "Machine Model", class: "form-label fw-semibold" %>
+                  <%= m.select :model, [],
+                        { prompt: "Select model" },
+                        class: "form-select mx-auto",
+                        style: "max-width: 250px;",
+                        data: { machine_select_target: "model" } %>
+                </div>
+
               </div>
 
             <% end %>
@@ -48,7 +53,68 @@
             <!-- Buttons -->
             <div class="d-flex justify-content-center gap-3 mt-4">
               <%= f.submit "Create Profile", class: "btn custom-btn" %>
-              <%= f.submit "Next", class: "btn custom-btn" %>
             </div>
 
           <% end %>
+
+          <hr>
+
+          <h3 class="fw-bold mb-4">Profiles</h3>
+
+          <% @profiles.each do |p| %>
+            <div class="mb-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
+
+              <div class="form-check">
+                <%= radio_button_tag :selected_profile, p.id, false, class: "form-check-input" %>
+                <%= label_tag "selected_profile_#{p.id}", p.name, class: "form-check-label fw-semibold" %>
+              </div>
+
+              <ul class="mt-2">
+                <% p.machines.each do |m| %>
+                  <li><%= m.brand %> - <%= m.model %></li>
+                <% end %>
+              </ul>
+
+              <%= button_to profile_path(p),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "btn custom-btn mt-2",
+                    form: { style: "display:inline;" } do %>
+                Delete
+              <% end %>
+
+
+            </div>
+          <% end %>
+
+
+        <div class="text-center mt-4">
+          <form action="<%= clothing_items_path %>" method="get" id="next-form" data-turbo="false">
+            <button type="submit" class="btn custom-btn" id="next-btn">Next</button>
+          </form>
+        </div>
+
+
+      <div id="machine-data" data-models='<%= @machine_models.to_json %>'></div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const nextForm = document.getElementById("next-form");
+
+          nextForm.addEventListener("submit", (event) => {
+            const selected = document.querySelector('input[name="selected_profile"]:checked');
+
+            if (!selected) {
+              event.preventDefault();
+              alert("Please select a profile before continuing.");
+            }
+          });
+        });
+      </script>
+
+
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

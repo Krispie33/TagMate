@@ -16,14 +16,13 @@ Rails.application.routes.draw do
   resources :clothing_items, only: [:index, :show]
 
 
-  resources :profiles, only: [:new, :create, :destroy]
-  resources :scan
+  resources :profiles, only: [:index, :new, :create, :destroy]
 
   resources :chats, only: [:show] do
     resources :messages, only: [:create]
   end
-
-  resources :drawers do
+  
+  resources :drawers, only: [:index] do 
     resources :clothing_items, only: [:new, :create]
   end
 end

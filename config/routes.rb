@@ -18,11 +18,14 @@ Rails.application.routes.draw do
 
   resources :profiles, only: [:index, :new, :create, :destroy]
 
+  get "scan", to: "messages#new", as: :scan
+
   resources :chats, only: [:show, :create] do
     resources :messages, only: [:create]
   end
-  
-  resources :drawers, only: [:index] do 
+
+
+  resources :drawers, only: [ :index, :show, :new, :create, :destroy ] do
     resources :clothing_items, only: [:new, :create]
   end
 end

@@ -1,9 +1,7 @@
 <div class="max-w-4xl mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">My Clothes</h1>
-    <% if @drawer %>
-      <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
-    <% end %>
+    <h1 class="text-2xl font-bold"><%= @drawer.name %></h1>
+    <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
   </div>
 
   <% if @clothing_items.empty? %>
@@ -11,18 +9,15 @@
   <% else %>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       <% @clothing_items.each do |item| %>
-        <%= link_to clothing_item_path(item), class: "bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden" do %>
+        <%= link_to clothing_item_path(item), class: "bg-white rounded-lg shadow" do %>
           <% if item.item_image.attached? %>
             <%= image_tag item.item_image, class: "w-full h-40 object-cover" %>
           <% else %>
-            <div class="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">No image</div>
+            <div class="w-full h-40 bg-gray-100 flex items-center justify-center">No image</div>
           <% end %>
-          <div class="p-3 space-y-1">
+          <div class="p-3">
             <% if item.care_summary.present? %>
               <p class="text-xs text-gray-600 line-clamp-2"><%= item.care_summary %></p>
-            <% end %>
-            <% if item.drawer.present? %>
-              <p class="text-xs text-blue-500"><%= item.drawer.name %></p>
             <% end %>
           </div>
         <% end %>

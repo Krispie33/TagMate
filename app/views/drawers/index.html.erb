@@ -1,16 +1,26 @@
 
-<h1>Your Drawers</h1>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Your Drawers</h1>
+  </div>
 
-<div class="container ">
   <% if @drawers.empty? %>
-    <p class="text-gray-500">No drawers yet.</p>
+    <div class="text-center py-5 text-muted">
+      <p class="fs-5">No drawers yet.</p>
+    </div>
   <% else %>
-    <div class="#">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       <% @drawers.each do |drawer| %>
-        <%= link_to drawer, class: "bg-white rounded-lg shadow hover:shadow-md transition p-4" do %>
-          <p class="font-semibold"><%= drawer.name %></p>
-          <p class="text-sm text-gray-500"><%= drawer.clothing_items.count %> items</p>
-        <% end %>
+        <div class="col">
+          <%= link_to drawer, class: "text-decoration-none" do %>
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= drawer.name %></h5>
+                <p class="card-text text-muted small"><%= drawer.clothing_items.count %> items</p>
+              </div>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>

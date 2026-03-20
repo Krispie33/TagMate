@@ -1,7 +1,7 @@
 <div class="max-w-4xl mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold"><%= @drawer.name %></h1>
-    <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-decoration-none" %>
   </div>
 
   <% if @drawer.instructions.present? %>
@@ -16,15 +16,15 @@
   <% else %>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       <% @clothing_items.each do |item| %>
-        <%= link_to clothing_item_path(item), class: "bg-white rounded-lg shadow" do %>
+        <%= link_to clothing_item_path(item), class: "bg-white rounded-lg shadow text-decoration-none" do %>
           <% if item.item_image.attached? %>
-            <%= image_tag item.item_image, class: "w-full h-40 object-cover" %>
+            <%= image_tag item.item_image, class: "img-tm" %>
           <% else %>
             <div class="w-full h-40 bg-gray-100 flex items-center justify-center">No image</div>
           <% end %>
           <div class="p-3">
             <% if item.care_summary.present? %>
-              <p class="text-xs text-gray-600 line-clamp-2"><%= item.care_summary %></p>
+              <p class="text-xs text-white line-clamp-2"><%= item.care_summary %></p>
             <% end %>
           </div>
         <% end %>

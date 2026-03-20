@@ -12,6 +12,16 @@
 
           <%= form_with model: @profile do |f| %>
 
+            <% if @profile.errors.any? %>
+              <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                  <% @profile.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
             <!-- Profile Name -->
             <div class="mb-3 text-center">
               <%= f.label :name, "Profile Name", class: "form-label fw-semibold" %>
@@ -101,17 +111,16 @@
       <div id="machine-data" data-models='<%= @machine_models.to_json %>'></div>
 
       <script>
-        document.addEventListener("turbo:load", () => {
-          const nextForm = document.getElementById("next-form");
-
-          nextForm.addEventListener("submit", (event) => {
-            const selected = document.querySelector('input[name="selected_profile"]:checked');
-
-            if (!selected) {
-              event.preventDefault();
-              alert("Please select a profile before continuing.");
-            }
-          });
+        document.getElementById("next-form").addEventListener("submit", (event) => {
+          const radios = document.querySelectorAll('input[name="selected_profile"]');
+          const selected = document.querySelector('input[name="selected_profile"]:checked');
+          if (radios.length === 0) {
+            event.preventDefault();
+            alert("Please create a profile first before continuing.");
+          } else if (!selected) {
+            event.preventDefault();
+            alert("Please select a profile before continuing.");
+          }
         });
       </script>
 

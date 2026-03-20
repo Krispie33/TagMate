@@ -13,12 +13,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :clothing_items, only: [:index, :show]
+  resources :clothing_items, only: [:index, :show, :new, :create]
 
 
   resources :profiles, only: [:index, :new, :create, :destroy]
 
-  get "scan", to: "messages#new", as: :scan
+  get "scan", to: "clothing_items#new", as: :scan
 
   resources :chats, only: [:show, :create] do
     resources :messages, only: [:create]

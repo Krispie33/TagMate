@@ -1,8 +1,8 @@
 <div class="max-w-4xl mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">My Clothes</h1>
-    <% if @drawer %>
-      <%= link_to "Add New Item", scan_path, class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
+    <h1 class="text-2xl font-bold text-white">My Clothes</h1>
+    <% unless @drawer %>
+      <%= link_to "Add New Item", scan_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-decoration-none" %>
     <% end %>
   </div>
 

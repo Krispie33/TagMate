@@ -4,20 +4,20 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @profile.machines.build # builds one machine for the form
-    @profiles = Profile.includes(:machines)
+    @profiles = current_user.profiles.includes(:machines)
   end
 
   def create
-    if Profile.count >= 5
-      @profiles = Profile.includes(:machines)
+    if current_user.profiles.count >= 5
+      @profiles = current_user.profiles.includes(:machines)
       @profile = Profile.new
+      @profile.machines.build
       flash.now[:alert] = "You can only create up to 5 profiles."
       render :new, status: :unprocessable_entity
       return
     end
 
-    @profile = Profile.new(profile_params)
-    @profile.user = current_user
+    @profile = current_user.profiles.build(profile_params)
 
     if @profile.save
       if params[:commit] == "Create Profile"
@@ -26,8 +26,9 @@ class ProfilesController < ApplicationController
         redirect_to profiles_path
       end
     else
-      @profiles = Profile.includes(:machines)
-      render :new
+      @profiles = current_user.profiles.includes(:machines)
+      @profile.machines.build if @profile.machines.empty?
+      render :new, status: :unprocessable_entity
     end
   end
 

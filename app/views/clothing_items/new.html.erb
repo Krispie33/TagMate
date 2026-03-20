@@ -1,15 +1,6 @@
-<% if @drawer %>
-  <h2>Add item to <%= @drawer.name %></h2>
-  <%= simple_form_for [@drawer, @clothing_item] do |f| %>
-    <%= f.input :care_summary %>
-    <%= f.input :tag_image,  as: :file, label: "Tag image" %>
-    <%= f.input :item_image, as: :file, label: "Item image" %>
-    <%= f.button :submit, "Save Item", class: "btn btn-primary" %>
-  <% end %>
-<% else %>
-  <h2>1. Take a picture of the laundry tag and the garment</h2>
-  <%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
-    <%= f.input :tag_image, as: :file, label: "Upload tag image" %>
-    <%= f.button :submit, "Analyse Tag", class: "btn btn-primary" %>
-  <% end %>
+<h2>1. Take a picture of the laundry tag and the garment</h2>
+<%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
+  <%= f.input :tag_image,  as: :file, label: "Upload tag image" %>
+  <%= f.input :item_image, as: :file, label: "Upload item image" %>
+  <%= f.button :submit, "Analyse Tag", class: "btn btn-primary" %>
 <% end %>

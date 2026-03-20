@@ -7,7 +7,7 @@
   <% if @drawer.instructions.present? %>
     <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
       <h2 class="text-sm font-semibold text-blue-800 mb-1">Washing Instructions</h2>
-      <p class="text-sm text-blue-700"><%= @drawer.instructions %></p>
+      <div class="text-sm text-blue-700"><%= simple_format @drawer.instructions %></div>
     </div>
   <% end %>
 

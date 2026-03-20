@@ -24,7 +24,7 @@
       <li>Bleach: <%= @clothing_item.bleach_allowed ? "Allowed" : "Do not bleach" %></li>
       <li>Tumble dry: <%= @clothing_item.tumble_dry ? "Allowed" : "Do not tumble dry" %></li>
       <li>Iron: <%= @clothing_item.iron_allowed ? "Allowed" : "Do not iron" %></li>
-      <li>Dry clean only: <%= @clothing_item.dry_clean_only ? "Yes" : "No" %></li>
+      <li>Dry clean only: <%= @clothing_item.dry_clean ? "Yes" : "No" %></li>
     </ul>
   <% else %>
     <p>Care instructions have not been processed yet.</p>

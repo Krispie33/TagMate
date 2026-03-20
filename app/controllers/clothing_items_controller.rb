@@ -17,7 +17,8 @@ class ClothingItemsController < ApplicationController
   DRAWER_INSTRUCTIONS_SYSTEM_PROMPT = <<~PROMPT
     You are a laundry assistant helping a young adult do their first laundry.
     Write clear, actionable washing instructions for a drawer of clothes that all share the same care settings.
-    Use simple language, bullet points, and Markdown. Keep it under 150 words.
+    Use simple language and plain text only — no Markdown, no asterisks, no symbols.
+    Use numbered steps. Keep it under 150 words.
   PROMPT
 
   def index
@@ -75,9 +76,11 @@ class ClothingItemsController < ApplicationController
   def extract_care_data(file)
     llm = RubyLLM.chat(model: "gpt-4o")
     llm.with_instructions(TAG_ANALYSIS_SYSTEM_PROMPT)
+    base64     = Base64.strict_encode64(File.read(file.tempfile.path))
+    image_data = "data:#{file.content_type};base64,#{base64}"
     raw = llm.ask(
       "Analyse this clothing care label and return the JSON object described in the instructions.",
-      with: { image: file.tempfile.path }
+      with: { image: image_data }
     )
     JSON.parse(raw.content)
   end

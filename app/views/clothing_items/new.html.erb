@@ -1,11 +1,6 @@
 <h2>1. Take a picture of the laundry tag and the garment</h2>
-<div>
-  <div class="camera-block">
-    <%= simple_form_for [@drawer, @clothing_item] do |f| %>
-    <%= f.input :care_summary, required: true %>
-    <%= f.input :tag_image, as: :file, label: "Upload a file (PDF, image, or audio)" %>
-    <%= f.input :item_image, as: :file, label: "Upload a file (PDF, image, or audio)" %>
-    <%= f.button :submit, 'Ask LLM', class: 'btn btn-primary' %>
-  <% end %>
-  </div>
-</div>
+<%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
+  <%= f.input :tag_image,  as: :file, label: "Upload tag image" %>
+  <%= f.input :item_image, as: :file, label: "Upload item image" %>
+  <%= f.button :submit, "Analyse Tag", class: "btn btn-primary" %>
+<% end %>

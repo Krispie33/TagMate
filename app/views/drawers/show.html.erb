@@ -4,6 +4,13 @@
     <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700" %>
   </div>
 
+  <% if @drawer.instructions.present? %>
+    <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <h2 class="text-sm font-semibold text-blue-800 mb-1">Washing Instructions</h2>
+      <div class="text-sm text-blue-700"><%= simple_format @drawer.instructions %></div>
+    </div>
+  <% end %>
+
   <% if @clothing_items.empty? %>
     <p class="text-gray-500">No clothing items yet. Add your first one!</p>
   <% else %>

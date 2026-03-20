@@ -46,6 +46,7 @@ class ClothingItemsController < ApplicationController
     @clothing_item = ClothingItem.new(clothing_item_params)
     @clothing_item.drawer = @drawer
     @clothing_item.user = current_user
+    raise
     if @clothing_item.save
       redirect_to @clothing_item, notice: "Clothing item saved successfully."
     else

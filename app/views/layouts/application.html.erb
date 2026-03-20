@@ -24,7 +24,7 @@
   </head>
 
   <body>
-    <% unless current_page?(root_path) %>
+   <% if user_signed_in? %>
       <%= render "shared/navbar" %>
     <% end %>
     <%= render "shared/flashes" %>

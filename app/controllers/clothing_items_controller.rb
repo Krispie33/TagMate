@@ -60,33 +60,14 @@ class ClothingItemsController < ApplicationController
       redirect_to new_clothing_item_path, alert: "Please attach a tag image." and return
     end
 
-    care_data = extract_care_data(tag_file)
+    # Attach the file to a temporary item first so we get an ActiveStorage URL for the LLM
+    temp_item = current_user.clothing_items.new
+    temp_item.tag_image.attach(tag_file)
+    temp_item.save(validate: false)
+
+    care_data = extract_care_data(temp_item.tag_image)
     drawer    = find_or_create_drawer_for(care_data)
-    build_clothing_item(care_data, drawer, tag_file)
-    update_drawer_instructions(drawer)
-    redirect_to drawer_path(drawer), notice: "Tag analysed and item added to '#{drawer.name}'."
-  rescue JSON::ParserError
-    redirect_to new_clothing_item_path, alert: "Could not read the care label. Please try again with a clearer image."
-  end
-
-  def clothing_item_params
-    params.require(:clothing_item).permit(:care_summary, :tag_image, :item_image)
-  end
-
-  def extract_care_data(file)
-    llm = RubyLLM.chat(model: "gpt-4o")
-    llm.with_instructions(TAG_ANALYSIS_SYSTEM_PROMPT)
-    base64     = Base64.strict_encode64(File.read(file.tempfile.path))
-    image_data = "data:#{file.content_type};base64,#{base64}"
-    raw = llm.ask(
-      "Analyse this clothing care label and return the JSON object described in the instructions.",
-      with: { image: image_data }
-    )
-    JSON.parse(raw.content)
-  end
-
-  def build_clothing_item(care_data, drawer, tag_file)
-    item = ClothingItem.new(
+    temp_item.update_columns(
       wash_temp:       care_data["wash_temp"],
       bleach_allowed:  care_data["bleach_allowed"] || false,
       tumble_dry:      care_data["tumble_dry"]     || false,
@@ -94,12 +75,27 @@ class ClothingItemsController < ApplicationController
       dry_clean:       care_data["dry_clean"]      || false,
       care_summary:    care_data["care_summary"],
       ai_raw_response: care_data,
-      drawer:          drawer,
-      user:            current_user
+      drawer_id:       drawer.id
     )
-    item.tag_image.attach(tag_file)
-    item.save(validate: false)
-    item
+    update_drawer_instructions(drawer)
+    redirect_to drawer_path(drawer), notice: "Tag analysed and item added to '#{drawer.name}'."
+  rescue JSON::ParserError
+    temp_item&.destroy
+    redirect_to new_clothing_item_path, alert: "Could not read the care label. Please try again with a clearer image."
+  end
+
+  def clothing_item_params
+    params.require(:clothing_item).permit(:care_summary, :tag_image, :item_image)
+  end
+
+  def extract_care_data(attachment)
+    llm = RubyLLM.chat(model: "gpt-4o")
+    llm.with_instructions(TAG_ANALYSIS_SYSTEM_PROMPT)
+    raw = llm.ask(
+      "Analyse this clothing care label and return the JSON object described in the instructions.",
+      with: { image: attachment.url }
+    )
+    JSON.parse(raw.content)
   end
 
   # Finds a drawer with matching wash settings, or creates a new one

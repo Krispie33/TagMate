@@ -1,27 +1,37 @@
 
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">Your Drawers</h1>
-  </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
 
-  <% if @drawers.empty? %>
-    <div class="text-center py-5 text-muted">
-      <p class="fs-5">No drawers yet.</p>
-    </div>
-  <% else %>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <% @drawers.each do |drawer| %>
-        <div class="col">
-          <%= link_to drawer, class: "text-decoration-none" do %>
-            <div class="card h-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title"><%= drawer.name %></h5>
-                <p class="card-text text-muted small"><%= drawer.clothing_items.count %> items</p>
-              </div>
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Your Drawers</h2>
+          </div>
+
+          <% if @drawers.empty? %>
+            <p class="text-white">No drawers yet.</p>
+          <% else %>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+              <% @drawers.each do |drawer| %>
+                <div class="col">
+                  <%= link_to drawer, class: "text-decoration-none" do %>
+                    <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body btn custom-btn">
+                        <h5 class="card-title text-white"><%= drawer.name %></h5>
+                        <p class="card-text text-white small"><%= drawer.clothing_items.count %> items</p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           <% end %>
+
         </div>
-      <% end %>
+      </div>
+
     </div>
-  <% end %>
+  </div>
 </div>

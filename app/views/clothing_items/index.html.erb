@@ -18,23 +18,30 @@
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
               <% @clothing_items.each do |item| %>
                 <div class="col">
-                  <%= link_to clothing_item_path(item), class: "card h-100 border-0 shadow-sm text-decoration-none btn custom-btn" do %>
-                    <% if item.item_image.attached? %>
-                      <%= image_tag item.item_image, class: "img-tm card-img-top" %>
-                    <% else %>
-                      <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 160px;">
-                        <span class="text-muted">No image</span>
+                  <div class="position-relative">
+                    <%= link_to clothing_item_path(item), class: "card h-100 border-0 shadow-sm text-decoration-none btn custom-btn" do %>
+                      <% if item.item_image.attached? %>
+                        <%= image_tag item.item_image, class: "img-tm card-img-top" %>
+                      <% else %>
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 160px;">
+                          <span class="text-muted">No image</span>
+                        </div>
+                      <% end %>
+                      <div class="card-body p-2">
+                        <% if item.care_summary.present? %>
+                          <p class="card-text text-white small"><%= item.care_summary %></p>
+                        <% end %>
+                        <% if item.drawer.present? %>
+                          <p class="card-text text-white small"><%= item.drawer.name %></p>
+                        <% end %>
                       </div>
                     <% end %>
-                    <div class="card-body p-2">
-                      <% if item.care_summary.present? %>
-                        <p class="card-text text-white small"><%= item.care_summary %></p>
-                      <% end %>
-                      <% if item.drawer.present? %>
-                        <p class="card-text text-white small"><%= item.drawer.name %></p>
-                      <% end %>
-                    </div>
-                  <% end %>
+                    <%= button_to clothing_item_path(item), method: :delete,
+                          data: { turbo_confirm: "Delete this item?" },
+                          class: "position-absolute bottom-0 end-0 m-2 btn btn-sm p-1 border-0 bg-transparent", style: "color: #7AB2B2;" do %>
+                      <i class="fa-solid fa-trash-can"></i>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
             </div>

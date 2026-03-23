@@ -20,6 +20,7 @@ class ClothingItemsController < ApplicationController
   PROMPT
 
   before_action :require_profile!, only: [:new, :create]
+  before_action :set_clothing_item, only: [:show, :destroy]
 
   def index
     @clothing_items = current_user.clothing_items
@@ -30,7 +31,11 @@ class ClothingItemsController < ApplicationController
   end
 
   def show
-    @clothing_item = current_user.clothing_items.find(params[:id])
+  end
+
+  def destroy
+    @clothing_item.destroy
+    redirect_to clothing_items_path, notice: "Item deleted."
   end
 
   def create
@@ -68,6 +73,10 @@ class ClothingItemsController < ApplicationController
   end
 
   private
+
+  def set_clothing_item
+    @clothing_item = current_user.clothing_items.find(params[:id])
+  end
 
   def require_profile!
     unless current_user.profiles.exists?

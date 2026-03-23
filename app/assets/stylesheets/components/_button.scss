@@ -28,3 +28,15 @@
   border-radius: 8px !important;
   width: auto !important;
 }
+
+.andrew-card {
+  background-color: #7AB2B2;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(122, 178, 178, 0.55) !important;
+  }
+}

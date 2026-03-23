@@ -1,45 +1,64 @@
-<div class="max-w-2xl mx-auto p-6 space-y-6">
-  <h1 class="text-2xl font-bold"><%= @clothing_item.name.presence || "Clothing item" %></h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
 
-  <div class="grid grid-cols-2 gap-4">
-    <div>
-      <h2 class="text-sm font-semibold text-gray-500 mb-1">Garment</h2>
-      <% if @clothing_item.item_image.attached? %>
-        <%= image_tag @clothing_item.item_image, class: "img-tm" %>
-      <% else %>
-        <div class="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">No photo</div>
-      <% end %>
-    </div>
-    <div>
-      <h2 class="text-sm font-semibold text-gray-500 mb-1">Care Label</h2>
-      <% if @clothing_item.tag_image.attached? %>
-        <%= image_tag @clothing_item.tag_image, class: "img-tm" %>
-      <% else %>
-        <div class="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">No photo</div>
-      <% end %>
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><%= @clothing_item.name.presence || "Clothing item" %></h2>
+            <%= link_to "Back to Drawer", drawer_path(@clothing_item.drawer), class: "btn custom-btn" %>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-6">
+              <h6 class="fw-semibold text-white mb-2">Garment</h6>
+              <% if @clothing_item.item_image.attached? %>
+                <%= image_tag @clothing_item.item_image, class: "img-tm w-100 rounded-3" %>
+              <% else %>
+                <div class="d-flex align-items-center justify-content-center bg-light rounded-3" style="height: 160px;">
+                  <span class="text-muted">No image</span>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-6">
+              <h6 class="fw-semibold text-white mb-2">Care Label</h6>
+              <% if @clothing_item.tag_image.attached? %>
+                <%= image_tag @clothing_item.tag_image, class: "img-tm w-100 rounded-3" %>
+              <% else %>
+                <div class="d-flex align-items-center justify-content-center bg-light rounded-3" style="height: 160px;">
+                  <span class="text-muted">No image</span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @clothing_item.care_summary.present? %>
+            <div class="mt-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
+              <h6 class="fw-semibold mb-2">How to wash this item</h6>
+              <p class="text-white small mb-3"><%= @clothing_item.care_summary %></p>
+              <ul class="list-unstyled text-white small mb-0">
+                <li><span class="fw-medium">Wash at:</span> <%= @clothing_item.wash_temp.present? ? "#{@clothing_item.wash_temp}°C" : "Cold / hand wash" %></li>
+                <li><span class="fw-medium">Bleach:</span> <%= @clothing_item.bleach_allowed ? "Allowed" : "Do not bleach" %></li>
+                <li><span class="fw-medium">Tumble dry:</span> <%= @clothing_item.tumble_dry ? "Allowed" : "Do not tumble dry" %></li>
+                <li><span class="fw-medium">Iron:</span> <%= @clothing_item.iron_allowed ? "Allowed" : "Do not iron" %></li>
+                <li><span class="fw-medium">Dry clean:</span> <%= @clothing_item.dry_clean ? "Yes" : "No" %></li>
+              </ul>
+            </div>
+
+            <% if @clothing_item.drawer&.instructions.present? %>
+              <div class="mt-3 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
+                <h6 class="fw-semibold mb-1">Washing instructions for this drawer</h6>
+                <div class="text-white small"><%= simple_format @clothing_item.drawer.instructions %></div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-white">Care instructions have not been processed yet.</p>
+          <% end %>
+
+        </div>
+      </div>
+
     </div>
   </div>
-
-  <% if @clothing_item.care_summary.present? %>
-    <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-      <h2 class="text-base font-semibold text-blue-800 mb-3">How to wash this item</h2>
-      <p class="text-sm text-blue-700 mb-4"><%= @clothing_item.care_summary %></p>
-      <ul class="space-y-1 text-sm text-blue-700">
-        <li><span class="font-medium">Wash at:</span> <%= @clothing_item.wash_temp.present? ? "#{@clothing_item.wash_temp}°C" : "Cold / hand wash" %></li>
-        <li><span class="font-medium">Bleach:</span> <%= @clothing_item.bleach_allowed ? "Allowed" : "Do not bleach" %></li>
-        <li><span class="font-medium">Tumble dry:</span> <%= @clothing_item.tumble_dry ? "Allowed" : "Do not tumble dry" %></li>
-        <li><span class="font-medium">Iron:</span> <%= @clothing_item.iron_allowed ? "Allowed" : "Do not iron" %></li>
-        <li><span class="font-medium">Dry clean:</span> <%= @clothing_item.dry_clean ? "Yes" : "No" %></li>
-      </ul>
-    </div>
-
-    <% if @clothing_item.drawer&.instructions.present? %>
-      <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
-        <h2 class="text-base font-semibold text-green-800 mb-2">Washing instructions for this drawer</h2>
-        <div class="text-sm text-green-700"><%= simple_format @clothing_item.drawer.instructions %></div>
-      </div>
-    <% end %>
-  <% else %>
-    <p class="text-gray-500">Care instructions have not been processed yet.</p>
-  <% end %>
 </div>

@@ -13,12 +13,31 @@
 @import "components/camera";
 @import "pages/index";
 
+.card {
+  background-color: rgba(8, 131, 149, 0.9) !important;
+  color: white;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   background: #09637E;
   color: white;
 }
 
-.card {
-  background-color: rgba(8, 131, 149, 0.9) !important;
-  color: white;
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn {
+  border-radius: 12px;
+}
+
+@media (max-width: 576px) {
+  .display-5 {
+    font-size: 2.2rem;
+  }
 }

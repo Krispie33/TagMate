@@ -9,12 +9,10 @@ class Chat < ApplicationRecord
     Generate a short, descriptive, 3-to-6-word title that summarizes the user question for a chat conversation.
   PROMPT
 
-  before_create { self.title ||= DEFAULT_TITLE }
-  validates :title, presence: true
+  # before_validation :generate_title_from_first_message
+  # validates :title, presence: true
 
   def generate_title_from_first_message
-    return unless title == DEFAULT_TITLE
-
     first_user_message = messages.where(role: "user").order(:created_at).first
     return if first_user_message.nil?
 

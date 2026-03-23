@@ -58,3 +58,9 @@
     </div>
   </div>
 </div>
+<h2>1. Take a picture of the laundry tag and the garment</h2>
+<%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
+  <%= f.input :tag_image,  as: :file, label: "Upload tag image" %>
+  <%= f.input :item_image, as: :file, label: "Upload item image" %>
+  <%= f.button :submit, "Analyse Tag", class: "btn btn-primary" %>
+<% end %>

@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :clothing_items, only: [:index, :show, :new, :create]
+  resources :clothing_items, only: [:index, :show, :new, :create, :destroy]
+
 
 
   resources :profiles, only: [:index, :new, :create, :destroy]
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   end
 
 
-  resources :drawers, only: [ :index, :show, :new, :create, :destroy ] do
+  resources :drawers, only: [:index, :show, :new, :create, :destroy] do
     resources :clothing_items, only: [:new, :create]
   end
 end

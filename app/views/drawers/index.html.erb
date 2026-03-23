@@ -16,14 +16,21 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
               <% @drawers.each do |drawer| %>
                 <div class="col">
-                  <%= link_to drawer, class: "text-decoration-none" do %>
-                    <div class="card h-100 border-0 shadow-sm">
-                      <div class="card-body btn custom-btn">
-                        <h5 class="card-title text-white"><%= drawer.name %></h5>
-                        <p class="card-text text-white small"><%= drawer.clothing_items.count %> items</p>
+                  <div class="position-relative">
+                    <%= link_to drawer, class: "text-decoration-none" do %>
+                      <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body btn custom-btn">
+                          <h5 class="card-title text-white"><%= drawer.name %></h5>
+                          <p class="card-text text-white small"><%= drawer.clothing_items.count %> items</p>
+                        </div>
                       </div>
-                    </div>
-                  <% end %>
+                    <% end %>
+                    <%= button_to drawer_path(drawer), method: :delete,
+                          data: { turbo_confirm: "Delete this drawer and all its items?" },
+                          class: "position-absolute bottom-0 end-0 m-2 btn btn-sm p-1 border-0 bg-transparent", style: "color: #EBF4F6;" do %>
+                      <i class="fa-solid fa-trash-can"></i>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
             </div>

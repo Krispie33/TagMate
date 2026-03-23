@@ -82,7 +82,7 @@
           <h3 class="fw-bold mb-4">Profiles</h3>
 
           <% @profiles.each do |p| %>
-            <div class="mb-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
+            <div class="mb-4 p-3 rounded position-relative" style="background-color: rgba(255,255,255,0.15);">
 
               <div class="form-check">
                 <%= radio_button_tag :selected_profile, p.id, false, class: "form-check-input" %>
@@ -98,11 +98,10 @@
               <%= button_to profile_path(p),
                     method: :delete,
                     data: { turbo_confirm: "Are you sure?" },
-                    class: "btn custom-btn mt-2",
-                    form: { style: "display:inline;" } do %>
-                Delete
+                    class: "position-absolute bottom-0 end-0 m-2 btn btn-sm p-1 border-0 bg-transparent",
+                    style: "color: #EBF4F6;" do %>
+                <i class="fa-solid fa-trash-can"></i>
               <% end %>
-
 
             </div>
           <% end %>

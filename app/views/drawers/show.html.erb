@@ -1,37 +1,53 @@
-<div class="max-w-4xl mx-auto p-6">
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold"><%= @drawer.name %></h1>
-    <div class="flex gap-2">
-      <%= button_to "Ask Andrew", chats_path, method: :post, params: { drawer_id: @drawer.id }, class: "btn btn-primary" %>
-      <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-decoration-none" %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><%= @drawer.name %></h2>
+            <div class="d-flex gap-2">
+              <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "btn custom-btn" %>
+              <%= button_to "Ask Andrew", chats_path, method: :post, params: { drawer_id: @drawer.id }, class: "btn custom-btn" %>
+            </div>
+          </div>
+
+          <% if @clothing_items.empty? %>
+            <p class="text-white">No clothing items yet. Add your first one!</p>
+          <% else %>
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+              <% @clothing_items.each do |item| %>
+                <div class="col">
+                  <%= link_to clothing_item_path(item), class: "card h-100 border-0 shadow-sm text-decoration-none" do %>
+                    <% if item.item_image.attached? %>
+                      <%= image_tag item.item_image, class: "img-tm card-img-top" %>
+                    <% else %>
+                      <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 160px;">
+                        <span class="text-muted">No image</span>
+                      </div>
+                    <% end %>
+                    <% if item.care_summary.present? %>
+                      <div class="card-body p-2">
+                        <p class="card-text text-white small"><%= item.care_summary %></p>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if @drawer.instructions.present? %>
+            <div class="mt-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
+              <h6 class="fw-semibold mb-1">Washing Instructions</h6>
+              <div class="text-white"><%= simple_format @drawer.instructions %></div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+
     </div>
   </div>
-
-  <% if @drawer.instructions.present? %>
-    <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-      <h2 class="text-sm font-semibold text-blue-800 mb-1">Washing Instructions</h2>
-      <div class="text-sm text-blue-700"><%= simple_format @drawer.instructions %></div>
-    </div>
-  <% end %>
-
-  <% if @clothing_items.empty? %>
-    <p class="text-gray-500">No clothing items yet. Add your first one!</p>
-  <% else %>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      <% @clothing_items.each do |item| %>
-        <%= link_to clothing_item_path(item), class: "bg-white rounded-lg shadow text-decoration-none" do %>
-          <% if item.item_image.attached? %>
-            <%= image_tag item.item_image, class: "img-tm" %>
-          <% else %>
-            <div class="w-full h-40 bg-gray-100 flex items-center justify-center">No image</div>
-          <% end %>
-          <div class="p-3">
-            <% if item.care_summary.present? %>
-              <p class="text-xs text-white line-clamp-2"><%= item.care_summary %></p>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
 </div>

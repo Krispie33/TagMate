@@ -23,13 +23,13 @@
             <% end %>
 
             <!-- Profile Name -->
-            <div class="mb-3 text-center">
-              <%= f.label :name, "Profile Name", class: "form-label fw-semibold" %>
-              <%= f.text_field :name,
-                    class: "form-control mx-auto",
-                    style: "max-width: 250px;",
-                    maxlength: 20 %>
-            </div>
+              <div class="mb-3 text-center">
+                <%= f.label :name, "Profile Name", class: "form-label fw-semibold" %>
+                <%= f.text_field :name,
+                      class: "form-control mx-auto",
+                      style: "max-width: 250px;",
+                      maxlength: 20 %>
+              </div>
 
             <%= f.fields_for :machines do |m| %>
 
@@ -43,7 +43,12 @@
                         { prompt: "Select brand" },
                         class: "form-select mx-auto",
                         style: "max-width: 250px;",
-                        data: { machine_select_target: "brand", action: "change->machine-select#updateModels" } %>
+                        data: { machine_select_target: "brand", action: "change->machine-select#brandChanged" } %>
+                  <input type="text"
+                         placeholder="Enter your brand"
+                         class="form-control mx-auto mt-2 d-none"
+                         style="max-width: 250px;"
+                         data-machine-select-target="brandOther">
                 </div>
 
                 <!-- Model -->
@@ -53,7 +58,12 @@
                         { prompt: "Select model" },
                         class: "form-select mx-auto",
                         style: "max-width: 250px;",
-                        data: { machine_select_target: "model" } %>
+                        data: { machine_select_target: "model", action: "change->machine-select#toggleModelOther" } %>
+                  <input type="text"
+                         placeholder="Enter your model"
+                         class="form-control mx-auto mt-2 d-none"
+                         style="max-width: 250px;"
+                         data-machine-select-target="modelOther">
                 </div>
 
               </div>
@@ -98,7 +108,7 @@
           <% end %>
 
         <div class="d-flex justify-content-end mt-4">
-          <form action="<%= clothing_items_path %>"
+          <form action="<%= new_clothing_item_path %>"
             method="get"
             id="next-form"
             data-turbo="false">

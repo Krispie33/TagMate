@@ -20,6 +20,7 @@ class Machine < ApplicationRecord
     Panasonic
     Beko
     IFB
+    Other
   ].freeze
 
   MODELS = {

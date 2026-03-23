@@ -1,41 +1,41 @@
-          <div class="container py-5" style="background:#0f8a9d; min-height:100dvh;">
-          <div class="row justify-content-center">
-          <div class="col-12 text-center" style="max-width: 380px;">
+<div class="landing-page d-flex flex-column">
 
-            <div class="mb-3">
-            <%= image_tag "TagMate_landing.png",
-                class: "img-fluid rounded shadow",
-                style: "max-width: 100%; height: auto; max-height: 36dvh; object-fit: contain;",
-                alt: "TagMate illustration" %>
-          </div>
-
-
-          <h1 class="text-white fw-bold mb-2" style="font-size: 2.2rem;">TagMate</h1>
-
-          <p class="text-white mb-3" style="font-size: 1.4rem; line-height: 1.35;">
-            Your laundry, decoded.
-          </p>
-
-          <% if user_signed_in? %>
-            <p class="text-white mb-4">
-              Welcome back, <%= current_user.username %>
-            <p>
-            </div>
-
-            <div class="d-grid gap-2 justify-content-center">
-              <%= link_to "Go to profile", new_profile_path, class: "btn btn-outline-light btn-lg rounded-pill" %>
-              <%= link_to "Scan your clothes", scan_path, class: "btn btn-light btn-lg rounded-pill" %>
-              <%= link_to "Go to drawers", drawers_path, class: "btn btn-outline-light btn-lg rounded-pill" %>
-            </div>
-          <% else %>
-            <div class="d-grid gap-2">
-              <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-lg rounded-pill" %>
-              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-lg rounded-pill" %>
-            </div>
-          <% end %>
-
-        </div>
-      </div>
-    </div>
+  <!-- Hero Image -->
+  <div class="landing-hero">
+    <%= image_tag "TagMate_landing.png",
+        class: "landing-hero-image",
+        alt: "TagMate illustration" %>
   </div>
-</div>
+
+  <!-- Content -->
+  <div class="landing-content text-center text-white d-flex flex-column justify-content-between">
+  <div></div> <!-- spacer -->
+
+  <div class="landing-inner mx-auto">
+    <h1 class="landing-title">Your laundry, decoded.</h1>
+
+    <% if user_signed_in? %>
+      <p class="landing-welcome">
+        Welcome back, <%= current_user.username %>
+      </p>
+
+      <div class="d-grid gap-3">
+        <%= link_to "Start scanning", scan_path, class: "btn landing-cta" %>
+      </div>
+
+      <p class="landing-helper">
+        Snap a label and get simple care instructions.
+      </p>
+    <% else %>
+      <div class="d-grid gap-2 mt-3">
+        <%= link_to "Login", new_user_session_path, class: "btn landing-cta" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn landing-cta-outline" %>
+      </div>
+
+      <p class="landing-helper">
+        Learn what every laundry symbol means in seconds.
+      </p>
+    <% end %>
+  </div>
+
+  <div style="height: 40px;"></div> <!-- bottom spacing -->

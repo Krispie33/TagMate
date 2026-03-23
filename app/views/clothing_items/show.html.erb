@@ -1,19 +1,22 @@
 <div class="max-w-2xl mx-auto p-6 space-y-6">
   <h1 class="text-2xl font-bold"><%= @clothing_item.name.presence || "Clothing item" %></h1>
 
-  <div class="grid grid-cols-2 gap-4">
-    <div>
+  <div class="row g-3">
+    <div class="col-6">
       <h2 class="text-sm font-semibold text-gray-500 mb-1">Garment</h2>
       <% if @clothing_item.item_image.attached? %>
-        <%= image_tag @clothing_item.item_image, class: "w-full rounded-lg object-cover" %>
+        <%= image_tag @clothing_item.item_image, class: "img-tm" %>
       <% else %>
         <div class="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">No photo</div>
       <% end %>
     </div>
-    <div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-6">
       <h2 class="text-sm font-semibold text-gray-500 mb-1">Care Label</h2>
       <% if @clothing_item.tag_image.attached? %>
-        <%= image_tag @clothing_item.tag_image, class: "w-full rounded-lg object-cover" %>
+        <%= image_tag @clothing_item.tag_image, class: "img-tm" %>
       <% else %>
         <div class="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">No photo</div>
       <% end %>

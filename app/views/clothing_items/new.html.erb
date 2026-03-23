@@ -1,3 +1,6 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
 <h2>1. Take a picture of the laundry tag and the garment</h2>
 <%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
   <%= f.input :tag_image,  as: :file, label: "Upload tag image" %>

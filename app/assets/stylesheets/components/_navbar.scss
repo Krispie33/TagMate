@@ -31,3 +31,26 @@
     <path stroke='%2309637E' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/>
   </svg>");
 }
+
+.btn-tm-outline {
+  color: #09637E;        /* text color */
+  background: transparent;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.btn-tm-outline:hover {
+  color: white;
+  background: #09637E;
+  border-color: #09637E;
+}
+
+.tm-nav-link {
+  color: #09637E !important;
+  font-weight: 500;
+  padding: 10px 0;
+}
+
+.tm-nav-link:hover {
+  color: #0f8a9d !important;
+}

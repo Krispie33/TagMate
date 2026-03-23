@@ -1,6 +1,60 @@
-<h2>1. Take a picture of the laundry tag and the garment</h2>
-<%= simple_form_for @clothing_item, url: clothing_items_path do |f| %>
-  <%= f.input :tag_image,  as: :file, label: "Upload tag image" %>
-  <%= f.input :item_image, as: :file, label: "Upload item image" %>
-  <%= f.button :submit, "Analyse Tag", class: "btn btn-primary" %>
-<% end %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+            <h3 class="mb-4">Take a picture of the laundry tag and the garment</h3>
+            <%= simple_form_for @clothing_item, url: clothing_items_path, html: { multipart: true } do |f| %>
+
+              <div class="row g-4">
+                <div class="col-12 col-md-6">
+                  <div data-controller="camera" data-camera-field-value="tag_image">
+                    <div class="camera-container">
+                      <video class="camera-video w-100" data-camera-target="video" style="display:none;">
+                        Video stream not available.
+                      </video>
+                      <canvas data-camera-target="canvas" style="display:none;"></canvas>
+                      <img class="camera-preview w-100" data-camera-target="preview" style="display:none;" alt="Tag preview" />
+                      <input data-camera-target="input" type="file" name="clothing_item[tag_image]" style="display:none;" />
+                      <button type="button" class="btn custom-camera-btn mt-2" data-camera-target="startbtn" data-action="click->camera#capture">
+                        Capture Tag Photo
+                      </button>
+                      <button type="button" class="btn custom-retake-btn mt-2" data-camera-target="retakebtn" data-action="click->camera#retake" style="display:none;">
+                        Retake Tag Image
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <div data-controller="camera" data-camera-field-value="item_image">
+                    <div class="camera-container">
+                      <video class="camera-video w-100" data-camera-target="video" style="display:none;">
+                        Video stream not available.
+                      </video>
+                      <canvas data-camera-target="canvas" style="display:none;"></canvas>
+                      <img class="camera-preview w-100" data-camera-target="preview" style="display:none;" alt="Item preview" />
+                      <input data-camera-target="input" type="file" name="clothing_item[item_image]" style="display:none;" />
+                      <button type="button" class="btn custom-camera-btn mt-2" data-camera-target="startbtn" data-action="click->camera#startStream">
+                        Capture Item Photo
+                      </button>
+                      <button type="button" class="btn custom-retake-btn mt-2" data-camera-target="retakebtn" data-action="click->camera#retake" style="display:none;">
+                        Retake Item Image
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center mt-4">
+                <%= f.button :submit, "Analyse Tag", class: "btn custom-btn" %>
+              </div>
+            <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

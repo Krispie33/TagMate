@@ -1,0 +1,28 @@
+.camera-container {
+  width: 100%;
+  max-width: 400px;        /* Prevents it from getting too large on desktop */
+  margin: 0 auto;          /* Centers on all screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.camera-video {
+  width: 100%;
+  height: auto;            /* Keeps aspect ratio */
+  border-radius: 12px;
+  background: #000;
+}
+
+.camera-preview {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
+}
+
+.camera-container button {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 250px;        /* Looks good on mobile */
+}

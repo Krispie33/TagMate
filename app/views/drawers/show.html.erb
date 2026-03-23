@@ -1,7 +1,10 @@
 <div class="max-w-4xl mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold"><%= @drawer.name %></h1>
-    <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-decoration-none" %>
+    <div class="flex gap-2">
+      <%= button_to "Ask Andrew", chats_path, method: :post, params: { drawer_id: @drawer.id }, class: "btn btn-primary" %>
+      <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-decoration-none" %>
+    </div>
   </div>
 
   <% if @drawer.instructions.present? %>

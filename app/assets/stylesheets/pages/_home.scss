@@ -1,1 +1,99 @@
 // Specific CSS for your home-page
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Navbar */
+.navbar-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Landing page layout */
+.landing-page {
+  min-height: 100dvh;
+  background: #0f8a9d;
+}
+
+/* Hero image */
+.landing-hero {
+  height: 42dvh;
+  overflow: hidden;
+}
+
+.landing-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* Content area */
+.landing-content {
+  flex: 1;
+  padding: 2rem 1.25rem 2.5rem;
+}
+
+.landing-inner {
+  width: 100%;
+  max-width: 380px;
+}
+
+/* Text */
+.landing-title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: rem;
+}
+
+.landing-welcome {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.landing-helper {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  opacity: 0.9;
+  color: white;
+}
+
+/* Buttons */
+.landing-cta {
+  background: #ffffff;
+  color: #09637E;
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.landing-cta:hover {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.landing-cta-outline {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 999px;
+  padding: 0.95rem 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.landing-cta-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}

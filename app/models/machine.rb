@@ -3,8 +3,6 @@
 class Machine < ApplicationRecord
   belongs_to :profile
 
-  validates :brand, :model, presence: true
-
   # ─────────────────────────────────────────────
   # Constants
   # ─────────────────────────────────────────────
@@ -18,34 +16,34 @@ class Machine < ApplicationRecord
     Miele
     Siemens
     Panasonic
-    Beko
     IFB
+    Beko
     Other
   ].freeze
 
   MODELS = {
-    "Samsung" => ["WW90T684DLN", "WF18T8000GW", "WD21T6300GW", "WW11BB944DGMS7", "WF45R6100AW", "WW90TA046AE",
-                  "WW12BB944DGHS7", "WD80T554DBW", "WF50BG8300AW", "WW11DG5B25AW"],
-    "LG" => ["F4V910WTSE", "WM4000HWA", "F6V1010WTSE", "WT7305CW", "WM3600HWA", "F4R5010WTSW", "WM6500HBA",
-             "F8V910WTSE", "WT7800CW", "F4Y709WBTN1"],
-    "Whirlpool" => ["WTW8127LW", "WFW9620HC", "WTW5000DW", "WFW6620HW", "WTW4816FW", "MVWB765FW", "WED9620HC",
-                    "WFW8620HW", "WTW7120HW", "MVWC565FW"],
-    "Bosch" => ["WAX32EH0GB", "WGG254A0GB", "WAJ28010GB", "WGG244A0GB", "WAX32KH1GB", "WGB256A0GB", "WAX32LH1GB",
-                "WGB14600AU", "WAX28LH1GB", "WGB256A1GB"],
-    "Haier" => ["HW100-B14979", "HW80-B14979", "HW100-B14TEAM5", "HW90-B14959U1", "HWD100-B14979", "HW120-B14979",
-                "HW80-B12929", "HW70-B12929", "HWD80-B14979", "HW100-B12929"],
-    "Electrolux" => ["EWF1042Q7WB", "ELFW7637AW", "EWF9042Q7WB", "ELFE7637AW", "EWF1041Q7WB", "EWW1042AEWA",
-                     "ELFW7537AW", "EWF7042Q5WB", "EFLS627UIW", "EWW8094ADWA"],
-    "Miele" => ["WCB200WCS", "WWD660WCS", "WDB020WCS", "WSI863WCS", "WCI870WCS", "WDD131WPS", "WCR870WPS",
-                "WTD163WPM", "WCI660WPS", "WSD663WCS"],
-    "Siemens" => ["WG54G2MCGB", "WM14VKH0GB", "WG42G2MCGB", "WM14UT89GB", "WG56G2MCGB", "WM14VMH0GB", "WG52G2MCGB",
-                  "WM14NK20GB", "WG56B2040GB", "WN54G2MCGB"],
-    "Panasonic" => ["NA-148XR1WGN", "NA-S096FR1WS", "NA-140XR1WGN", "NA-FW90X1", "NA-148MB3WGN", "NA-FS10X3WA",
-                    "NA-120VC6WGN", "NA-140MB3WGN", "NA-W10X1", "NA-148VB3WGN"],
-    "Beko" => ["WTL84151W", "WTL94151W", "WEC840522B", "WEX840430W", "WTL104151W", "WDEX8543430W", "WEY96052B",
-               "WTL84151B", "WEC740435B", "WDEX8540430W"],
-    "IFB" => ["Senator-WSS-Plus", "Executive-Wx", "Elite-Plus-Sx", "Senorita-Sx", "Neo-Diva-Sx",
-              "Senator-WSS-6010", "Elite-Plus-Vx", "Neo-Diva-WX", "Senator-WXS", "Executive-Plus-Vx"]
+    "Samsung" => ["EcoBubble 9kg", "EcoBubble 8kg", "WashTower Combo", "AddWash 11kg", "AddWash 9kg",
+                  "Bespoke AI 11kg", "Bespoke AI 9kg", "QuickDrive 8kg", "FlexWash 5.2kg", "EcoBubble 7kg"],
+    "LG" => ["TurboWash 360 9kg", "TurboWash 360 8kg", "AI DD 10kg", "AI DD 9kg", "AI DD 8kg",
+             "EZDispense 5.2kg", "TwinWash 9kg", "FrontLoad Steam 7kg", "TurboWash 11kg", "Vivace 9kg"],
+    "Whirlpool" => ["SupremeCare 9kg", "SupremeCare 8kg", "FreshCare 7kg", "FreshCare 6kg", "6th Sense 9kg",
+                    "6th Sense 8kg", "FreshCare+ 10kg", "ZEN Motor 9kg", "SteamCare 8kg", "QuietDrive 7kg"],
+    "Bosch" => ["Serie 8 9kg", "Serie 8 10kg", "Serie 6 9kg", "Serie 6 8kg", "Serie 4 8kg", "Serie 4 7kg",
+                "Serie 2 7kg", "HomeProfessional 9kg", "Serie 8 i-Dos 10kg", "Serie 6 i-Dos 9kg"],
+    "Haier" => ["Intelius 959 10kg", "Intelius 959 9kg", "Intelius 969 10kg", "I-Pro Series 7 10kg",
+                "I-Pro Series 5 9kg", "I-Pro Series 3 8kg", "HW100 Drum 10kg", "Direct Motion 9kg", "ABT 8kg", "Coral Black 10kg"],
+    "Electrolux" => ["PerfectCare 9kg", "PerfectCare 8kg", "UltimateCare 900 9kg", "UltimateCare 700 8kg",
+                     "UltimateCare 500 7kg", "SensorCare 8kg", "WashAndDry 8kg", "ComfortLift 8kg", "Woolmark 9kg", "EcoInverter 7kg"],
+    "Miele" => ["WCB200 7kg", "WDB020 7kg", "WCI870 9kg", "WCR870 9kg", "WDD131 8kg", "WSI863 9kg", "WWD660 9kg",
+                "WCI660 8kg", "WTD163 Washer-Dryer", "WSD663 Washer-Dryer"],
+    "Siemens" => ["iQ700 10kg", "iQ700 9kg", "iQ500 9kg", "iQ500 8kg", "iQ300 8kg", "iQ300 7kg", "iQ100 7kg",
+                  "iQ700 i-Dos 10kg", "iQ500 SelfCleaning 9kg", "iQ700 Washer-Dryer"],
+    "Panasonic" => ["StainMaster+ 10kg", "StainMaster+ 9kg", "StainMaster+ 8kg", "ActiveFoam 9kg", "ActiveFoam 8kg",
+                    "EcoNavi 10kg", "EcoNavi 9kg", "NA-S096 Washer-Dryer", "Heat Pump 8kg", "Slim Series 7kg"],
+    "IFB" => ["Senator Plus 8kg", "Executive 7kg", "Elite Plus 7kg", "Senorita 6.5kg", "Neo Diva 6kg",
+              "Senator WSS 6kg", "Executive VX 6.5kg", "Neo Diva WX 7kg", "Senator WXS 8kg", "Executive Plus 7.5kg"],
+    "Beko" => ["UltraFast 9kg", "UltraFast 8kg", "SteamCure 10kg", "SteamCure 9kg", "ProSmart 9kg",
+               "ProSmart 8kg", "AquaTech 10kg", "AquaTech 8kg", "AutoDose 9kg", "HygieneShield 9kg"]
   }.freeze
 
   # ─────────────────────────────────────────────

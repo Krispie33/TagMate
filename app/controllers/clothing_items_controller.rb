@@ -105,10 +105,10 @@ class ClothingItemsController < ApplicationController
   def drawer_name_for(care_data)
     if care_data["wash_temp"]
       "#{care_data['wash_temp']}°C Wash"
-    elsif care_data["dry_clean"]
-      "Dry Clean Only"
-    else # care_data["wash_temp"].nil?
+    elsif care_data["wash_temp"].nil?
       "Cold / Hand Wash"
+    else # care_data["dry_clean"]
+      "Dry Clean Only"
     end
   end
 

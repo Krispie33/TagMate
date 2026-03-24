@@ -1,41 +1,38 @@
-<div class="landing-page d-flex flex-column">
+<div class="landing-page d-flex flex-column vh-100 overflow-hidden">
 
-  <!-- Hero Image -->
-  <div class="landing-hero">
+  <div class="w-100 p-0">
     <%= image_tag "TagMate_landing.png",
-        class: "landing-hero-image",
+        class: "w-100 d-block",
+        style: "object-fit: cover;",
         alt: "TagMate illustration" %>
   </div>
 
-  <!-- Content -->
-  <div class="landing-content text-center text-white d-flex flex-column justify-content-between">
-  <div></div> <!-- spacer -->
+  <div class="landing-content text-center text-white flex-grow-1 d-flex flex-column p-4">
 
-  <div class="landing-inner mx-auto">
-    <h1 class="landing-title">Your laundry, decoded.</h1>
+    <div class="landing-inner mx-auto w-100">
+      <h1 class="landing-title mt-5 fw-bold">Your laundry, decoded.</h1>
 
-    <% if user_signed_in? %>
-      <p class="landing-welcome">
-        Welcome back, <%= current_user.username %>
-      </p>
+      <% if user_signed_in? %>
+        <p class="landing-welcome mt-1 opacity-75 fs-6">
+          Welcome back, <%= current_user.username %>
+        </p>
 
-      <div class="d-grid gap-3">
-        <%= link_to "Start scanning", scan_path, class: "btn landing-cta" %>
-      </div>
+        <div class="flex-grow-1"></div>
+          <div class="d-grid gap-3 mt-extra">
+            <%= link_to "Start scanning", scan_path, class: "btn btn-light landing-cta py-3 fw-bold" %>
+          </div>
 
-      <p class="landing-helper">
-        Snap a label and get simple care instructions.
-      </p>
-    <% else %>
-      <div class="d-grid gap-2 mt-3">
-        <%= link_to "Login", new_user_session_path, class: "btn landing-cta" %>
-        <%= link_to "Sign up", new_user_registration_path, class: "btn landing-cta-outline" %>
-      </div>
 
-      <p class="landing-helper">
-        Learn what every laundry symbol means in seconds.
-      </p>
-    <% end %>
+        <p class="landing-helper mt-3 small opacity-75 px-3">
+          Snap a label and get simple care instructions.
+        </p>
+      <% else %>
+        <div class="d-grid gap-3 mt-extra">
+          <%= link_to "Login", new_user_session_path, class: "btn btn-light landing-cta py-3 fw-bold" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light py-3 fw-bold" %>
+        </div>
+      <% end %>
+    </div>
+
   </div>
-
-  <div style="height: 40px;"></div> <!-- bottom spacing -->
+</div>

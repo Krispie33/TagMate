@@ -12,19 +12,24 @@
       </button>
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
-       <ul class="navbar-nav text-end">
-        <li class="nav-item">
-          <%= link_to "Profile", new_profile_path, class: "nav-link tm-nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Drawers", drawers_path, class: "nav-link tm-nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link tm-nav-link" %>
-        </li>
-      </ul>
+        <ul class="navbar-nav text-end ms-auto">
+          <li class="nav-item">
+            <%= link_to "Profile", new_profile_path, class: "nav-link tm-nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Drawers", drawers_path, class: "nav-link tm-nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Tips & tricks", tips_path, class: "nav-link tm-nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Log out", destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "nav-link tm-nav-link" %>
+          </li>
+        </ul>
+      </div>
     <% end %>
 
   </div>
 </nav>
-

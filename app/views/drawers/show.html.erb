@@ -7,11 +7,10 @@
 
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold mb-0"><%= @drawer.name %></h2>
+            <%= link_to "Add Item", new_drawer_clothing_item_path(@drawer), class: "btn custom-btn" %>
           </div>
 
-          <div class="d-flex gap-3 align-items-start">
-            <div class="flex-grow-1">
-              <% if @clothing_items.empty? %>
+          <% if @clothing_items.empty? %>
                 <p class="text-white">No clothing items yet. Add your first one!</p>
               <% else %>
                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
@@ -27,7 +26,11 @@
                         <% end %>
                         <% if item.care_summary.present? %>
                           <div class="card-body p-2">
-                            <p class="card-text text-white small"><%= item.care_summary %></p>
+                            <ul class="card-text text-white small mb-0 ps-3">
+                              <% item.care_summary.split(",").map(&:strip).reject(&:blank?).each do |line| %>
+                                <li><%= line %></li>
+                              <% end %>
+                            </ul>
                           </div>
                         <% end %>
                       <% end %>
@@ -35,25 +38,22 @@
                   <% end %>
                 </div>
               <% end %>
-            </div>
-
-            <div class="d-flex flex-column gap-2 flex-shrink-0">
-              <%= link_to "Add New Item", new_drawer_clothing_item_path(@drawer), class: "btn custom-btn w-100" %>
-              <%= button_to chats_path, method: :post, params: { drawer_id: @drawer.id }, class: "btn p-0 border-0 bg-transparent w-100" do %>
-                <div class="card andrew-card border-0 shadow-sm text-center p-2 w-100">
-                  <div class="card-body p-1">
-                    <div style="font-size: 2rem;">🤖</div>
-                    <p class="text-white mb-0" style="font-size: 0.78rem; line-height: 1.3;">Hi, I'm Andrew.<br>How can I help?</p>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-
           <% if @drawer.instructions.present? %>
             <div class="mt-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
               <h6 class="fw-semibold mb-1">Washing Instructions</h6>
               <div class="text-white"><%= simple_format @drawer.instructions %></div>
+              <div class="d-flex justify-content-end mt-2">
+              <%= button_to chats_path, method: :post, params: { drawer_id: @drawer.id }, class: "btn p-0 border-0 bg-transparent flex-shrink-0" do %>
+                <div class="card andrew-card border-0 shadow-sm text-center p-2">
+                  <div class="card-body p-1 d-flex align-items-center gap-2">
+                    <div class="chat-bubble">
+                      <p class="text-white mb-0" style="font-size: 0.78rem; line-height: 1.3;">Hi, I'm Andrew.<br>How can I help?</p>
+                    </div>
+                    <div style="font-size: 2rem;">🤖</div>
+                  </div>
+                </div>
+              <% end %>
+              </div>
             </div>
           <% end %>
 

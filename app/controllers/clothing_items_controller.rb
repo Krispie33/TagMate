@@ -16,7 +16,7 @@ class ClothingItemsController < ApplicationController
     You are a laundry assistant helping a young adult do their first laundry.
     Write clear, actionable washing instructions for a drawer of clothes that all share the same care settings.
     Use simple language and plain text only — no Markdown, no asterisks, no symbols.
-    Use numbered steps. Keep it under 150 words.
+    Use 5 numbered steps. Keep it under 75 words.
   PROMPT
 
   before_action :require_profile!, only: [:new, :create]
@@ -102,12 +102,12 @@ class ClothingItemsController < ApplicationController
   end
 
   def drawer_name_for(care_data)
-    if care_data["dry_clean"]
-      "Dry Clean Only"
-    elsif care_data["wash_temp"].nil?
-      "Cold / Hand Wash"
-    else
+    if care_data["wash_temp"]
       "#{care_data['wash_temp']}°C Wash"
+    elsif care_data["dry_clean"]
+      "Dry Clean Only"
+    else
+      "Cold / Hand Wash"
     end
   end
 

@@ -18,26 +18,32 @@
   color: white;
 }
 
-html, body {
-  overflow-x: hidden;
-}
-
-body {
-  background: #09637E;
-  color: white;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
+// Your existing 12px rule is great, let's just make the CTA match
 .btn {
-  border-radius: 12px;
+  border-radius: 12px !important;
 }
 
-@media (max-width: 576px) {
-  .display-5 {
-    font-size: 2.2rem;
-  }
+.landing-page {
+  background-color: #088395; // Your specific teal
+}
+
+.landing-title {
+  font-size: 1.9rem;
+}
+
+// Increase this if you want the button even lower
+.mt-extra {
+  margin-top: 7rem !important;
+}
+
+.landing-cta {
+  background-color: white !important;
+  color: #088395 !important; // Teal text on white button
+  border: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); // Light shadow for depth
+}
+
+// Helper text slightly smaller to not compete with the button
+.landing-helper {
+  font-size: 0.9rem;
 }

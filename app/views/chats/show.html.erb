@@ -14,7 +14,7 @@
 
           <!-- Messages container -->
           <% if @chat.messages.any? %>
-            <div id="messages" class="p-4 rounded-4 mb-4" style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
+            <div id="messages" class="p-1 rounded-4 mb-4" style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
 
               <% @chat.messages.each do |message| %>
 
@@ -27,7 +27,7 @@
 
                 <% elsif message.role == "assistant" %>
                   <div class="d-flex justify-content-start mb-3">
-                    <div class="text-white px-4 py-2 rounded-4 shadow-sm " style="background-color: #7AB2B2; max-width: 80%;">
+                    <div class="text-white px-4 py-2 rounded-4 shadow-sm" >
                       <%= raw(render_markdown(message.content)) %>
                     </div>
                   </div>

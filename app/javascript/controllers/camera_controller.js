@@ -8,7 +8,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["video", "startbtn", "retakebtn", "canvas", "preview", "input"]
-  static values = { field: String, autostart: { type: Boolean, default: true } }
+  static values = { field: String }
 
   connect() {
     this.width = 400
@@ -26,27 +26,36 @@ export default class extends Controller {
       }
     })
 
-    if (this.autostartValue) {
-      this.startStream()
-    }
+    // Auto-start back camera (falls back to any camera on desktop)
+    this.startStream({ facingMode: { ideal: "environment" } })
   }
 
-  startStream() {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-      .then((stream) => {
-        this.videoTarget.srcObject = stream
-        this.videoTarget.play()
-        this.videoTarget.style.display = "block"
-        this.startbtnTarget.dataset.action = "click->camera#capture"
+  async startStream(videoConstraints) {
+    // Stop previous stream (required on iPhone)
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop())
+    }
 
-        // Hide preview if retaking
-        this.previewTarget.style.display = "none"
-        this.retakebtnTarget.style.display = "none"
-        this.startbtnTarget.style.display = "inline-block"
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: videoConstraints,
+        audio: false
       })
-      .catch((err) => {
-        console.log("Camera error: " + err)
-      })
+
+      this.videoTarget.srcObject = this.stream
+      this.videoTarget.play()
+      this.videoTarget.style.display = "block"
+
+      // Reset UI
+      this.previewTarget.style.display = "none"
+      this.retakebtnTarget.style.display = "none"
+      this.startbtnTarget.style.display = "inline-block"
+      this.startbtnTarget.dataset.action = "click->camera#capture"
+
+    } catch (err) {
+      console.error("Camera error:", err)
+      alert("Unable to access this camera on your device.")
+    }
   }
 
   capture() {

@@ -18,6 +18,7 @@
                       <canvas data-camera-target="canvas" style="display:none;"></canvas>
                       <img class="camera-preview w-100" data-camera-target="preview" style="display:none;" alt="Tag preview" />
                       <input data-camera-target="input" type="file" name="clothing_item[tag_image]" style="display:none;" />
+
                       <button type="button" class="btn custom-camera-btn mt-2" data-camera-target="startbtn" data-action="click->camera#capture">
                         Capture Tag Photo
                       </button>
@@ -37,7 +38,8 @@
                       <canvas data-camera-target="canvas" style="display:none;"></canvas>
                       <img class="camera-preview w-100" data-camera-target="preview" style="display:none;" alt="Item preview" />
                       <input data-camera-target="input" type="file" name="clothing_item[item_image]" style="display:none;" />
-                      <button type="button" class="btn custom-camera-btn mt-2" data-camera-target="startbtn" data-action="click->camera#startStream">
+
+                      <button type="button" class="btn custom-camera-btn mt-2" data-camera-target="startbtn" data-action="click->camera#capture">
                         Capture Item Photo
                       </button>
                       <button type="button" class="btn custom-retake-btn mt-2" data-camera-target="retakebtn" data-action="click->camera#retake" style="display:none;">

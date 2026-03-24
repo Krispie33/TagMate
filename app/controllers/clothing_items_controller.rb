@@ -106,7 +106,7 @@ class ClothingItemsController < ApplicationController
       "#{care_data['wash_temp']}°C Wash"
     elsif care_data["dry_clean"]
       "Dry Clean Only"
-    else
+    else # care_data["wash_temp"].nil?
       "Cold / Hand Wash"
     end
   end

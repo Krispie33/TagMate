@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  get "tips", to: "pages#tips"
   resources :clothing_items, only: [:index, :show, :new, :create, :destroy]
 
 

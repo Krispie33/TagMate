@@ -12,15 +12,18 @@ class ClothingItemsController < ApplicationController
     }
   PROMPT
 
-  DRAWER_INSTRUCTIONS_SYSTEM_PROMPT = <<~PROMPT
-    You are a laundry assistant helping a young adult do their first laundry.
-    Write clear, actionable washing instructions for a drawer of clothes that all share the same care settings.
-    Use simple language and plain text only — no Markdown, no asterisks, no symbols.
-    Use numbered steps. Keep it under 150 words.
-  PROMPT
+  def drawer_instructions(brand, model)
+    drawer_instructions_system_prompt = <<~PROMPT
+      You are a laundry assistant helping a young adult do their first laundry.
+      Write clear, actionable washing instructions for a drawer of clothes that all share the same care settings.
+      Provide the recommended washing machine program setting for #{brand} brand and #{model} model. Also specify the suitable rpm.
+      Use simple language and plain text only — no Markdown, no asterisks, no symbols.
+      Use 5 numbered steps. Keep it under 75 words.
+    PROMPT
+  end
 
-  before_action :require_profile!, only: [:new, :create]
-  before_action :set_clothing_item, only: [:show, :destroy]
+  before_action :require_profile!, only: %i[new create]
+  before_action :set_clothing_item, only: %i[show destroy]
 
   def index
     @clothing_items = current_user.clothing_items
@@ -40,9 +43,7 @@ class ClothingItemsController < ApplicationController
 
   def create
     tag_file = params.dig(:clothing_item, :tag_image)
-    unless tag_file
-      redirect_to new_clothing_item_path, alert: "Please attach a tag image." and return
-    end
+    redirect_to new_clothing_item_path, alert: "Please attach a tag image." and return unless tag_file
 
     item_file = params.dig(:clothing_item, :item_image)
 
@@ -55,14 +56,14 @@ class ClothingItemsController < ApplicationController
     drawer    = find_or_create_drawer(care_data)
 
     item.update_columns(
-      wash_temp:       care_data["wash_temp"],
-      bleach_allowed:  care_data["bleach_allowed"] || false,
-      tumble_dry:      care_data["tumble_dry"]     || false,
-      iron_allowed:    care_data["iron_allowed"]   || false,
-      dry_clean:       care_data["dry_clean"]      || false,
-      care_summary:    care_data["care_summary"],
+      wash_temp: care_data["wash_temp"],
+      bleach_allowed: care_data["bleach_allowed"] || false,
+      tumble_dry: care_data["tumble_dry"] || false,
+      iron_allowed: care_data["iron_allowed"] || false,
+      dry_clean: care_data["dry_clean"] || false,
+      care_summary: care_data["care_summary"],
       ai_raw_response: care_data,
-      drawer_id:       drawer.id
+      drawer_id: drawer.id
     )
 
     update_drawer_instructions(drawer)
@@ -79,9 +80,9 @@ class ClothingItemsController < ApplicationController
   end
 
   def require_profile!
-    unless current_user.profiles.exists?
-      redirect_to new_profile_path, alert: "Please create a profile before scanning clothes."
-    end
+    return if current_user.profiles.exists?
+
+    redirect_to new_profile_path, alert: "Please create a profile before scanning clothes."
   end
 
   def extract_care_data(attachment)
@@ -102,12 +103,12 @@ class ClothingItemsController < ApplicationController
   end
 
   def drawer_name_for(care_data)
-    if care_data["dry_clean"]
-      "Dry Clean Only"
-    elsif care_data["wash_temp"].nil?
-      "Cold / Hand Wash"
-    else
+    if care_data["wash_temp"]
       "#{care_data['wash_temp']}°C Wash"
+    elsif care_data["dry_clean"]
+      "Dry Clean Only"
+    else # care_data["wash_temp"].nil?
+      "Cold / Hand Wash"
     end
   end
 
@@ -123,8 +124,14 @@ class ClothingItemsController < ApplicationController
       "Dry clean: #{item.dry_clean ? 'yes' : 'no'}"
     ].join(". ")
 
+    profile = drawer.profile
+    machine = profile.machines.first
+
+    brand = machine.brand
+    model = machine.model
+
     llm = RubyLLM.chat(model: "gpt-4.1-nano")
-    llm.with_instructions(DRAWER_INSTRUCTIONS_SYSTEM_PROMPT)
+    llm.with_instructions(drawer_instructions(brand, model))
     response = llm.ask("Write step-by-step washing instructions for a drawer of clothes with these care settings: #{settings}.")
     drawer.update_column(:instructions, response.content)
   end

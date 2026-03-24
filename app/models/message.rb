@@ -7,7 +7,7 @@ class Message < ApplicationRecord
 
   validate :user_message_limit, if: -> { role == "user" }
   validate :file_size_limit
-  validates :content, length: { minimum: 10, maximum: 1000 }, if: -> { role == "user" && !file.attached? }
+  validates :content, length: { minimum: 1, maximum: 100 }, if: -> { role == "user" && !file.attached? }
 
   private
 

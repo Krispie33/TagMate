@@ -1,0 +1,45 @@
+.care-icon-list {
+  .care-icon-item {
+    white-space: nowrap;
+    overflow: hidden;
+
+    .care-icon {
+      position: relative;
+      flex-shrink: 0;
+      color: white;
+
+      &.care-icon--disallowed {
+        color: rgba(255, 255, 255, 0.3);
+
+        .care-icon__cross {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+
+    .care-icon-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+  }
+}
+
+.no-image-placeholder {
+  height: 160px;
+}
+
+.drawer-instructions {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.andrew-text {
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.andrew-emoji {
+  font-size: 2rem;
+}

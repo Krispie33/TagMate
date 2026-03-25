@@ -14,7 +14,9 @@
 
           <!-- Messages container -->
           <% if @chat.messages.any? %>
-            <div id="messages" class="p-1 rounded-4 mb-4" data-controller="scroll" data-action="turbo:before-stream-render@document->scroll#messagesChanged" style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
+            <div id="messages" class="p-1 rounded-4 mb-4" data-controller="scroll"
+              data-action="turbo:before-stream-render@document->scroll#messagesChanged"
+              style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
               <% @chat.messages.each do |message| %>
                 <%=render "messages/message", message: message  %>
               <% end %>

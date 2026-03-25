@@ -1,12 +1,12 @@
-<%= simple_form_for [@chat, @message] do |f| %>
+<%= simple_form_for [@chat, @message],
+  html: { data: { controller: "chat-form", action: "turbo:submit-start->chat-form#submit" } } do |f| %>
 
-              <div class="position-relative"
-                   data-controller="chat-form">
+              <div class="position-relative">
                 <%= f.input :content,
                   label: false,
                   placeholder: "Ask Andrew...",
                   input_html: { class: "form-control rounded-pill px-4 py-2 pe-5 text-start",
-                                style: "height: 60px; line-height: 38px;",
+                                style: "height: 60px; line-height: 1.5; padding-top: 16px; padding-bottom: 16px;",
                                 data: { chat_form_target: "input", action: "input->chat-form#toggle" } } %>
                 <%= f.button :submit, "🤖",
                   class: "btn border-0 bg-transparent position-absolute top-50 end-0 translate-middle-y me-4 p-0 fs-5 d-none",

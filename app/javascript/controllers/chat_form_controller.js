@@ -10,4 +10,9 @@ export default class extends Controller {
   toggle() {
     this.submitTarget.classList.toggle("d-none", !this.inputTarget.value.trim())
   }
+
+  submit() {
+    this.inputTarget.value = ""
+    this.toggle()
+  }
 }

@@ -8,7 +8,7 @@ class ClothingItemsController < ApplicationController
       "tumble_dry": <boolean — true if tumble drying is permitted>,
       "iron_allowed": <boolean — true if ironing is permitted>,
       "dry_clean": <boolean — true if a dry-clean circle symbol is shown>,
-      "care_summary": <string — one concise sentence describing all care instructions>
+      "care_summary": <string — comma-separated list of all five care instructions in this exact style: "Hand wash" or "Wash at 30°C" / "Wash at 40°C" / "Wash at 60°C" / "Wash at 90°C", "NO bleach" or "Bleach OK", "NO tumble dry" or "Tumble dry OK", "Iron on LOW/MED/HIGH" or "NO iron", "Dry clean OK" or "NO dry clean">
     }
   PROMPT
 

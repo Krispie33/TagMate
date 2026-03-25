@@ -10,13 +10,15 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(chat: @chat, role: "user"))
 
     if @message.save
+      @assistant_message = @chat.messages.create(role: "assistant", content: "")
       send_question
-      @chat.messages.create(role: "assistant", content: @response.content)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity
     end
+    @assistant_message.update(content: @response.content)
+    broadcast_replace(@assistant_message)
   end
 
   private
@@ -26,13 +28,26 @@ class MessagesController < ApplicationController
   end
 
   def build_conversation_history
-    @chat.messages.each { |msg| @ruby_llm_chat.add_message(msg) }
+    @chat.messages.each do |msg|
+      next if msg.content.blank?
+
+      @ruby_llm_chat.add_message(msg)
+    end
   end
 
   def send_question
     @ruby_llm_chat = RubyLLM.chat(model: "gpt-4.1-nano")
     build_conversation_history
     @ruby_llm_chat.with_instructions(SYSTEM_PROMPT)
-    @response = @ruby_llm_chat.ask(@message.content)
+    @response = @ruby_llm_chat.ask(@message.content) do |chunk|
+      next if chunk.content.blank? # skip empty chunks
+
+      @assistant_message.content += chunk.content
+      broadcast_replace(@assistant_message)
+    end
+  end
+
+  def broadcast_replace(message)
+    Turbo::StreamsChannel.broadcast_replace_to(@chat, target: helpers.dom_id(message), partial: "messages/message", locals: { message: message })
   end
 end

@@ -1,3 +1,4 @@
+<%= turbo_stream_from @chat %>
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
@@ -13,42 +14,15 @@
 
           <!-- Messages container -->
           <% if @chat.messages.any? %>
-            <div id="messages" class="p-1 rounded-4 mb-4" style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
+            <div id="messages" class="p-1 rounded-4 mb-4" data-controller="scroll" data-action="turbo:before-stream-render@document->scroll#messagesChanged" style="background-color: #088395; max-height: 60vh; overflow-y: auto;">
               <% @chat.messages.each do |message| %>
-                <% if message.role == "user" %>
-                  <div class="d-flex justify-content-end mb-3">
-                    <div class="text-white px-4 py-1 rounded-pill shadow-sm text-center" style="background-color: #7AB2B2; max-width: 80%;">
-                      <%= raw(render_markdown(message.content)) %>
-                    </div>
-                  </div>
-                <% elsif message.role == "assistant" %>
-                  <div class="d-flex justify-content-start mb-3">
-                    <div class="text-white px-4 py-2 rounded-4 shadow-sm" >
-                      <%= raw(render_markdown(message.content)) %>
-                    </div>
-                  </div>
-                <% end %>
+                <%=render "messages/message", message: message  %>
               <% end %>
             </div>
           <% end %>
 
           <div id="new_message_container">
-            <%= simple_form_for [@chat, @message] do |f| %>
-
-              <div class="position-relative"
-                   data-controller="chat-form">
-                <%= f.input :content,
-                  label: false,
-                  placeholder: "Ask Andrew...",
-                  input_html: { class: "form-control rounded-pill px-4 py-2 pe-5 text-start",
-                                style: "height: 60px; line-height: 38px;",
-                                data: { chat_form_target: "input", action: "input->chat-form#toggle" } } %>
-                <%= f.button :submit, "🤖",
-                  class: "btn border-0 bg-transparent position-absolute top-50 end-0 translate-middle-y me-4 p-0 fs-5 d-none",
-                  style: "line-height: 1;",
-                  data: { chat_form_target: "submit" } %>
-              </div>
-            <% end %>
+            <%= render "messages/form", chat: @chat, message: Message.new  %>
           </div>
         </div>
       </div>

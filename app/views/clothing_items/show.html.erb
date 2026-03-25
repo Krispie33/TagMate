@@ -36,7 +36,6 @@
           <% if @clothing_item.care_summary.present? %>
             <div class="mt-4 p-3 rounded" style="background-color: rgba(255,255,255,0.15);">
               <h6 class="fw-semibold mb-2">How to wash this item</h6>
-              <p class="text-white small mb-3"><%= @clothing_item.care_summary %></p>
               <ul class="list-unstyled text-white small mb-0">
                 <li><span class="fw-medium">Wash at:</span> <%= @clothing_item.wash_temp.present? ? "#{@clothing_item.wash_temp}°C" : "Cold / hand wash" %></li>
                 <li><span class="fw-medium">Bleach:</span> <%= @clothing_item.bleach_allowed ? "Allowed" : "Do not bleach" %></li>

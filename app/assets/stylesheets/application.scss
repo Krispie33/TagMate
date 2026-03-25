@@ -13,6 +13,9 @@
 @import "components/camera";
 @import "pages/index";
 
+home,body {
+  background-color: #088395;
+}
 .card {
   background-color: rgba(8, 131, 149, 0.9) !important;
   color: white;

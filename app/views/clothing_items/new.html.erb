@@ -1,3 +1,5 @@
+<%= render "shared/loading_overlay" %>
+
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
@@ -6,7 +8,7 @@
         <div class="card-body p-4 p-md-5">
 
             <h3 class="mb-4">Take a picture of the laundry tag and the garment</h3>
-            <%= simple_form_for @clothing_item, url: clothing_items_path, html: { multipart: true } do |f| %>
+            <%= simple_form_for @clothing_item, url: clothing_items_path, html: { multipart: true, data: { turbo: true } } do |f| %>
 
               <div class="row g-4">
                 <div class="col-12 col-md-6">

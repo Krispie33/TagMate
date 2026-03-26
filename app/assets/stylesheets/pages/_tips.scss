@@ -27,7 +27,9 @@
   opacity: 0.92;
   max-width: 560px;
   margin: 0 auto;
+  white-space: nowrap;
 }
+
 
 .tips-cards {
   display: grid;
@@ -55,6 +57,18 @@
   margin-bottom: 0;
 }
 
+.tips-link {
+  color: #09637E;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tips-link:hover {
+  color: #eaf7f7;
+}
+
 @media (min-width: 768px) {
   .tips-page {
     padding: 2rem 1.5rem 3rem;
@@ -77,12 +91,4 @@
   .tips-title {
     font-size: 2.7rem;
   }
-}
-
-.tips-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-weight: 600;
-  color: #09637E;
-  text-decoration: none;
 }

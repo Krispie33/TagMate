@@ -1,0 +1,6 @@
+ # config/meta.yml
+ meta_product_name: "TagMate"
+ meta_title: "TagMate - Your laundry companion"
+ meta_description: "AI-powered laundry assistant that instantly scans and decodes confusing care labels. Making laundry simple, safe, and stress-free."
+ meta_image: "TagMate_rectangle.png" # should exist in `app/assets/images/`
+ twitter_account: "@product_twitter_account" # required for Twitter Cards
